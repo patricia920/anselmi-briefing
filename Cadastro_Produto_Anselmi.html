@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anselmi — Cadastro de Produto</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #231F20;
+    --white: #FFFFFF;
+    --cream: #F5F0EB;
+    --cream-light: #FAF8F5;
+    --beige: #E8E0D8;
+    --beige-dark: #D4C9BD;
+    --text: #231F20;
+    --text-light: #6B6461;
+    --text-muted: #9B9490;
+    --border: #D4C9BD;
+    --border-light: #E8E0D8;
+    --red: #C85A54;
+    --green: #5B8C5A;
+    --blue-hint: #DAE5F0;
+    --pink-hint: #F5E0E8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Montserrat', -apple-system, sans-serif; color: var(--text); line-height: 1.6; background: var(--cream); }
+
+  /* ===== HEADER ===== */
+  .top-bar { background: var(--black); color: #fff; text-align: center; padding: 10px 20px; font-size: 11px; letter-spacing: 2px; font-weight: 400; text-transform: uppercase; }
+  .header { background: var(--white); padding: 24px 0; text-align: center; border-bottom: 1px solid var(--border-light); }
+  .header .logo { height: 28px; }
+  .header .subtitle { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); font-weight: 400; margin-top: 8px; }
+
+  /* ===== CONTAINER ===== */
+  .container { max-width: 840px; margin: 40px auto; padding: 0 24px; }
+
+  /* ===== FORM CARD ===== */
+  .form-card { background: var(--white); border-radius: 2px; box-shadow: 0 1px 4px rgba(35,31,32,0.06); padding: 40px; }
+
+  .section-title {
+    font-size: 11px; color: var(--text); font-weight: 600; margin: 36px 0 18px;
+    letter-spacing: 3px; text-transform: uppercase; padding-bottom: 10px;
+    border-bottom: 1px solid var(--black); display: flex; align-items: center; gap: 10px;
+  }
+  .section-title:first-child { margin-top: 0; }
+  .section-title .badge {
+    font-size: 9px; background: var(--black); color: var(--white); padding: 3px 10px;
+    border-radius: 0; font-weight: 500; letter-spacing: 1.5px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+  .form-group > label {
+    display: block; font-weight: 500; font-size: 11px; color: var(--text-light);
+    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .form-group .hint { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: 400; }
+  input[type="text"], textarea, select {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 0;
+    font-size: 13px; font-family: inherit; transition: border 0.3s; background: var(--white); color: var(--text);
+  }
+  input::placeholder, textarea::placeholder { color: var(--beige-dark); }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--black); }
+  textarea { resize: vertical; min-height: 70px; }
+  select { cursor: pointer; background: var(--white); -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23231F20' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+  }
+
+  /* Radio & Checkbox pills */
+  .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .radio-group label, .checkbox-group label {
+    display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+    border: 1px solid var(--border); border-radius: 0; cursor: pointer;
+    font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0.3px;
+    transition: all 0.2s; background: var(--white); color: var(--text-light);
+  }
+  .radio-group label:hover, .checkbox-group label:hover { border-color: var(--black); color: var(--text); }
+  .radio-group input, .checkbox-group input { display: none; }
+  .radio-group label:has(input:checked), .checkbox-group label:has(input:checked) {
+    border-color: var(--black); background: var(--black); color: var(--white); font-weight: 500;
+  }
+
+  .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  @media (max-width: 640px) {
+    .two-cols, .three-cols { grid-template-columns: 1fr; }
+    .form-card { padding: 24px; }
+    .container { padding: 0 16px; margin: 24px auto; }
+    .photos-grid { grid-template-columns: 1fr !important; }
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn-row { display: flex; gap: 12px; margin-top: 36px; justify-content: flex-end; flex-wrap: wrap; }
+  .btn {
+    padding: 14px 32px; border: none; border-radius: 0; font-size: 11px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s; font-family: inherit; letter-spacing: 2px; text-transform: uppercase;
+  }
+  .btn-primary { background: var(--black); color: var(--white); }
+  .btn-primary:hover { background: #3a3536; }
+  .btn-secondary { background: var(--white); color: var(--text); border: 1px solid var(--black); }
+  .btn-secondary:hover { background: var(--cream-light); }
+  .btn-primary.sending { opacity: 0.5; pointer-events: none; }
+
+  .required::after { content: " *"; color: var(--red); font-weight: 400; }
+
+  /* Preposition hint */
+  .prep-hint { display: inline-block; font-size: 10px; padding: 3px 10px; margin-left: 8px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .prep-hint.de { background: var(--blue-hint); color: #2E5A88; }
+  .prep-hint.com { background: var(--pink-hint); color: #8C3A5A; }
+
+  /* ===== PHOTO UPLOAD ===== */
+  .photos-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .photo-slot {
+    border: 2px dashed var(--border); padding: 20px 12px; text-align: center;
+    cursor: pointer; transition: all 0.3s; position: relative; min-height: 200px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    background: var(--cream-light);
+  }
+  .photo-slot:hover { border-color: var(--black); background: var(--white); }
+  .photo-slot.has-image { border-style: solid; border-color: var(--border); padding: 8px; }
+  .photo-slot input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .photo-slot .slot-icon { font-size: 28px; color: var(--beige-dark); line-height: 1; }
+  .photo-slot .slot-label { font-size: 10px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+  .photo-slot .slot-hint { font-size: 10px; color: var(--beige-dark); }
+  .photo-slot .photo-preview { max-width: 100%; max-height: 180px; object-fit: contain; }
+  .photo-slot .photo-remove {
+    position: absolute; top: 6px; right: 6px; background: var(--black); color: var(--white);
+    border: none; width: 22px; height: 22px; cursor: pointer; font-size: 13px;
+    display: flex; align-items: center; justify-content: center; opacity: 0.7; transition: opacity 0.2s;
+  }
+  .photo-slot .photo-remove:hover { opacity: 1; }
+  .photo-slot .photo-name { font-size: 9px; color: var(--text-muted); margin-top: 4px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .photo-slot .slot-tag {
+    position: absolute; top: 0; left: 0; background: var(--black); color: var(--white);
+    font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
+    padding: 3px 10px;
+  }
+
+  /* ===== STATUS ===== */
+  .status-banner {
+    margin-top: 16px; padding: 14px 20px; font-size: 12px; letter-spacing: 0.3px;
+    display: none; align-items: center; gap: 10px;
+  }
+  .status-banner.visible { display: flex; }
+  .status-banner.success { background: #EAF4EA; color: #2D5A2D; border: 1px solid #B8D8B8; }
+  .status-banner.error { background: #FAECEB; color: #8C3A3A; border: 1px solid #E0BABA; }
+  .status-banner.info { background: var(--cream-light); color: var(--text-light); border: 1px solid var(--border); }
+
+  /* ===== CONFIG ===== */
+  .config-panel {
+    background: var(--cream-light); border: 1px solid var(--border-light); padding: 20px;
+    margin-bottom: 28px; display: none;
+  }
+  .config-panel.visible { display: block; }
+  .config-panel .config-title {
+    font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 12px;
+  }
+  .config-panel input[type="text"] { border: 1px solid var(--border); }
+  .config-toggle {
+    font-size: 11px; color: var(--text-muted); cursor: pointer; text-decoration: underline;
+    background: none; border: none; font-family: inherit; letter-spacing: 0.5px; margin-bottom: 16px;
+  }
+  .config-toggle:hover { color: var(--text); }
+
+  /* ===== FOOTER ===== */
+  .footer { text-align: center; padding: 40px 20px; }
+  .footer img { height: 20px; opacity: 0.3; }
+  .footer p { font-size: 10px; color: var(--beige-dark); margin-top: 8px; letter-spacing: 1px; }
+
+  /* ===== TOAST ===== */
+  .copy-toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    background: var(--black); color: var(--white); padding: 14px 32px;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100;
+  }
+  .copy-toast.show { opacity: 1; }
+
+  /* ===== COUNTER ===== */
+  .photo-counter {
+    font-size: 10px; color: var(--text-muted); margin-top: 8px; letter-spacing: 0.5px;
+  }
+
+  /* Campo "Outro" inline */
+  .campo-outro {
+    width: 100%; padding: 10px 16px; border: 1px solid var(--border); border-radius: 0;
+    font-size: 13px; font-family: inherit; background: var(--cream-light); color: var(--text);
+    transition: border 0.3s;
+  }
+  .campo-outro:focus { outline: none; border-color: var(--black); background: var(--white); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">Cadastro de Produto</div>
+
+<!-- HEADER -->
+<div class="header">
+  <svg class="logo" viewBox="0 0 841.89 136.1" xmlns="http://www.w3.org/2000/svg" style="height:28px;fill:#231F20;"><path d="M113.72,107.53h-54.11l-6.43,17.9h-31.82L65.08,10.66h43.17l43.72,114.77h-31.84l-6.41-17.9ZM105.51,84.44l-15.98-44.8h-5.61l-16.12,44.8h37.7Z"/><path d="M163.55,10.66h35.66l48.23,72.15h2.73V10.66h30.06v114.77h-34.84l-48.92-72.15h-2.86v72.15h-30.06V10.66Z"/><path d="M293.98,88.95h27.88c.69,9.7,8.88,15.99,26.92,15.99,16.67.14,25.27-5.19,25.27-12.98,0-6.56-4.92-10.53-17.76-12.57l-14.35-2.47c-21.86-3.69-44.94-8.47-44.94-34.84,0-22,18.43-35.25,51.92-35.25,31.02,0,52.46,9.98,52.46,39.9h-27.6c-1.63-9.43-9.16-15.71-25.41-15.71-14.62,0-21.72,4.91-21.72,12.43,0,5.87,4.37,10.1,15.02,11.88l12.44,2.19c22.13,3.96,50.55,6.69,50.55,35.37,0,23.64-19,36.48-55.88,36.35-36.62,0-55.21-12.43-54.79-40.31Z"/><path d="M418,10.66h98.91v25.01h-68.03v21.59h65.58v21.45h-65.58v21.72h68.03v25h-98.91V10.66Z"/><path d="M532.59,10.66h30.88v88.95h64.48v25.82h-95.36V10.66Z"/><path d="M642.95,10.66h39.21l25.14,75.42h2.33l25.14-75.42h39.21v114.77h-29.51v-62.99h-2.6l-21.59,62.99h-23.64l-21.59-62.99h-2.59v62.99h-29.51V10.66Z"/><path d="M789.65,10.66h30.88v114.77h-30.88V10.66Z"/></svg>
+  <div class="subtitle">Informacoes do Produto para Descricao</div>
+</div>
+
+<div class="container">
+
+  <!-- CONFIG PANEL -->
+  <button class="config-toggle" onclick="toggleConfig()">Configurar Google Slides</button>
+  <div id="configPanel" class="config-panel">
+    <div class="config-title">Integracao Google Slides</div>
+    <div class="form-group">
+      <label>URL do Google Apps Script (Web App)</label>
+      <div class="hint">Cole aqui a URL gerada ao implantar o Apps Script.</div>
+      <input type="text" id="appsScriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec" oninput="saveConfig()">
+    </div>
+    <div id="configStatus" class="status-banner info" style="display:flex;">
+      Sem URL configurada. O botao "Enviar ao Slides" ficara desativado ate configurar.
+    </div>
+  </div>
+
+  <div class="form-card">
+    <form id="produtoForm" autocomplete="off">
+
+      <!-- INFORMACOES BASICAS -->
+      <div class="section-title" style="margin-top:0;">Informacoes do Produto <span class="badge">Obrigatorio</span></div>
+      <div class="two-cols">
+        <div class="form-group">
+          <label class="required">Nome / Referencia</label>
+          <input type="text" id="nome" placeholder="Ex: Vestido Scena 18678">
+        </div>
+        <div class="form-group">
+          <label>Codigo / SKU</label>
+          <input type="text" id="codigo" placeholder="Ex: 18678">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="required">Tipo de Peca</label>
+        <div class="radio-group" id="tipoGroup">
+          <label><input type="radio" name="tipo" value="Sueter"><span>Sueter</span></label>
+          <label><input type="radio" name="tipo" value="Cardigan"><span>Cardigan</span></label>
+          <label><input type="radio" name="tipo" value="Blusa"><span>Blusa</span></label>
+          <label><input type="radio" name="tipo" value="Vestido"><span>Vestido</span></label>
+          <label><input type="radio" name="tipo" value="Maxipull"><span>Maxipull</span></label>
+          <label><input type="radio" name="tipo" value="Top"><span>Top</span></label>
+          <label><input type="radio" name="tipo" value="Colete"><span>Colete</span></label>
+          <label><input type="radio" name="tipo" value="Casaco"><span>Casaco</span></label>
+          <label><input type="radio" name="tipo" value="Regata"><span>Regata</span></label>
+          <label><input type="radio" name="tipo" value="Body"><span>Body</span></label>
+          <label><input type="radio" name="tipo" value="Saia"><span>Saia</span></label>
+          <label><input type="radio" name="tipo" value="Calca"><span>Calca</span></label>
+          <label><input type="radio" name="tipo" value="Capa"><span>Capa</span></label>
+          <label><input type="radio" name="tipo" value="Pelerine"><span>Pelerine</span></label>
+          <label><input type="radio" name="tipo" value="Polo"><span>Polo</span></label>
+          <label><input type="radio" name="tipo" value="Conjunto"><span>Conjunto</span></label>
+          <label><input type="radio" name="tipo" value="Acessorio"><span>Acessorio</span></label>
+          <label><input type="radio" name="tipo" value="Outro"><span>Outro</span></label>
+        </div>
+      </div>
+
+      <div class="form-group" id="tipoOutroGroup" style="display:none;">
+        <label>Especifique o tipo</label>
+        <input type="text" id="tipoOutro" placeholder="Ex: Poncho, Bolero, Macacao...">
+      </div>
+
+      <div class="two-cols">
+        <div class="form-group">
+          <label>Colecao</label>
+          <input type="text" id="colecao" placeholder="Ex: Maestra, Inverno 2026...">
+        </div>
+        <div class="form-group">
+          <label class="required">Cor Principal</label>
+          <input type="text" id="cor" placeholder="Ex: Off-white, Azul-marinho...">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Cores Secundarias / Detalhes de cor</label>
+        <input type="text" id="corSecundaria" placeholder="Ex: Detalhes em dourado, botoes pretos, listras em cru...">
+      </div>
+
+      <!-- CONSTRUCAO E MATERIAIS -->
+      <div class="section-title">Construcao e Materiais</div>
+
+      <div class="form-group">
+        <label class="required">Composicao / Material</label>
+        <div class="hint">Informe os materiais e percentuais, se disponiveis</div>
+        <input type="text" id="composicao" placeholder="Ex: 70% Algodao, 30% Poliamida | ou: Fio Londres">
+      </div>
+
+      <div class="form-group">
+        <label class="required">Ponto / Textura de Trico</label>
+        <div class="radio-group" id="pontoGroup">
+          <label><input type="radio" name="ponto" value="Ponto perola"><span>Ponto perola</span></label>
+          <label><input type="radio" name="ponto" value="Trama canelada"><span>Trama canelada</span></label>
+          <label><input type="radio" name="ponto" value="Meia-malha"><span>Meia-malha</span></label>
+          <label><input type="radio" name="ponto" value="Ponto em links"><span>Ponto em links</span></label>
+          <label><input type="radio" name="ponto" value="Trico 3D"><span>Trico 3D</span></label>
+          <label><input type="radio" name="ponto" value="Jacquard"><span>Jacquard</span></label>
+          <label><input type="radio" name="ponto" value="Pointelle"><span>Pointelle</span></label>
+          <label><input type="radio" name="ponto" value="Nervura"><span>Nervura</span></label>
+          <label><input type="radio" name="ponto" value="Trancado"><span>Trancado</span></label>
+          <label><input type="radio" name="ponto" value="Liso"><span>Liso</span></label>
+          <label><input type="radio" name="ponto" value="Croche"><span>Croche</span></label>
+          <label><input type="radio" name="ponto" value="Ponto bolinha"><span>Ponto bolinha</span></label>
+          <label><input type="radio" name="ponto" value="Waffle"><span>Waffle</span></label>
+          <label><input type="radio" name="ponto" value="Outro"><span>Outro</span></label>
+        </div>
+      </div>
+
+      <div class="form-group" id="pontoOutroGroup" style="display:none;">
+        <label>Especifique o ponto/textura</label>
+        <input type="text" id="pontoOutro" placeholder="Ex: Ajour, Rendado, Piquet...">
+      </div>
+
+      <!-- DESIGN E MODELAGEM -->
+      <div class="section-title">Design e Modelagem</div>
+
+      <div class="two-cols">
+        <div class="form-group">
+          <label class="required">Gola ou Decote <span id="prepHint" class="prep-hint" style="display:none;"></span></label>
+          <select id="golaDecote" onchange="updatePrepHint(); toggleOutroGola()">
+            <option value="">Selecione...</option>
+            <optgroup label="GOLAS (preposicao DE)">
+              <option value="gola|Gola alta">Gola alta</option>
+              <option value="gola|Gola chamine">Gola chamine</option>
+              <option value="gola|Gola role">Gola role</option>
+              <option value="gola|Gola polo">Gola polo</option>
+              <option value="gola|Gola perkins">Gola perkins</option>
+              <option value="gola|Gola subida">Gola subida</option>
+              <option value="gola|Gola redonda">Gola redonda</option>
+              <option value="gola|Gola V">Gola V</option>
+            </optgroup>
+            <optgroup label="DECOTES (preposicao COM)">
+              <option value="decote|Decote redondo">Decote redondo</option>
+              <option value="decote|Decote careca">Decote careca</option>
+              <option value="decote|Decote em V">Decote em V</option>
+              <option value="decote|Decote quadrado">Decote quadrado</option>
+              <option value="decote|Decote ombro a ombro">Decote ombro a ombro</option>
+              <option value="decote|Decote canoa">Decote canoa</option>
+              <option value="decote|Decote halter">Decote halter</option>
+              <option value="decote|Decote bardot">Decote bardot</option>
+              <option value="decote|Decote cruzado">Decote cruzado</option>
+            </optgroup>
+            <optgroup label="OUTROS">
+              <option value="outro|Sem gola/decote definido">Sem gola/decote definido</option>
+              <option value="outro|Capuz">Capuz</option>
+              <option value="outro|__outro__">Outro (digitar)</option>
+            </optgroup>
+          </select>
+          <input type="text" id="golaDecoteOutro" class="campo-outro" style="display:none; margin-top:8px;" placeholder="Descreva a gola ou decote...">
+        </div>
+
+        <div class="form-group">
+          <label class="required">Manga</label>
+          <select id="manga" onchange="toggleOutro('manga','mangaOutro')">
+            <option value="">Selecione...</option>
+            <option value="Manga longa">Manga longa</option>
+            <option value="Manga curta">Manga curta</option>
+            <option value="Manga ampla">Manga ampla</option>
+            <option value="Manga balloon">Manga balloon</option>
+            <option value="Manga bufante">Manga bufante</option>
+            <option value="Manga kimono">Manga kimono</option>
+            <option value="Manga morcego">Manga morcego</option>
+            <option value="Manga tres-quartos">Manga tres-quartos</option>
+            <option value="Manga raglan">Manga raglan</option>
+            <option value="Manga abalonada">Manga abalonada</option>
+            <option value="Manga franzida">Manga franzida</option>
+            <option value="Manga japonesa">Manga japonesa</option>
+            <option value="Manga caida">Manga caida</option>
+            <option value="Manga extra longa">Manga extra longa</option>
+            <option value="Sem manga">Sem manga</option>
+            <option value="Alcas">Alcas</option>
+            <option value="__outro__">Outro (digitar)</option>
+          </select>
+          <input type="text" id="mangaOutro" class="campo-outro" style="display:none; margin-top:8px;" placeholder="Descreva a manga...">
+        </div>
+      </div>
+
+      <div class="two-cols">
+        <div class="form-group">
+          <label class="required">Modelagem / Caimento</label>
+          <select id="modelagem" onchange="toggleOutro('modelagem','modelagemOutro')">
+            <option value="">Selecione...</option>
+            <option value="Ajustada">Ajustada (Slim fit)</option>
+            <option value="Regular">Regular</option>
+            <option value="Ampla">Ampla (Relaxed)</option>
+            <option value="Oversized">Oversized</option>
+            <option value="Evase">Evase</option>
+            <option value="Reta">Reta</option>
+            <option value="__outro__">Outro (digitar)</option>
+          </select>
+          <input type="text" id="modelagemOutro" class="campo-outro" style="display:none; margin-top:8px;" placeholder="Descreva a modelagem...">
+        </div>
+        <div class="form-group">
+          <label>Comprimento</label>
+          <select id="comprimento" onchange="toggleOutro('comprimento','comprimentoOutro')">
+            <option value="">Selecione (se aplicavel)...</option>
+            <option value="Cropped">Cropped</option>
+            <option value="Curto">Curto</option>
+            <option value="Medio">Medio</option>
+            <option value="Midi">Midi</option>
+            <option value="Longo">Longo</option>
+            <option value="Maxi">Maxi</option>
+            <option value="__outro__">Outro (digitar)</option>
+          </select>
+          <input type="text" id="comprimentoOutro" class="campo-outro" style="display:none; margin-top:8px;" placeholder="Descreva o comprimento...">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Fechamento</label>
+        <div class="radio-group">
+          <label><input type="radio" name="fecho" value="Sem fecho"><span>Sem fecho</span></label>
+          <label><input type="radio" name="fecho" value="Botoes"><span>Botoes</span></label>
+          <label><input type="radio" name="fecho" value="Ziper"><span>Ziper</span></label>
+          <label><input type="radio" name="fecho" value="Laco"><span>Laco</span></label>
+          <label><input type="radio" name="fecho" value="Amarracao"><span>Amarracao</span></label>
+          <label><input type="radio" name="fecho" value="Transpasse"><span>Transpasse</span></label>
+          <label><input type="radio" name="fecho" value="Fivela"><span>Fivela</span></label>
+          <label><input type="radio" name="fecho" value="Outro"><span>Outro</span></label>
+        </div>
+        <input type="text" id="fechoOutro" class="campo-outro" style="display:none; margin-top:8px;" placeholder="Descreva o fechamento...">
+      </div>
+
+      <!-- DETALHES -->
+      <div class="section-title">Detalhes e Acabamentos</div>
+
+      <div class="form-group">
+        <label>Detalhes Construtivos</label>
+        <div class="hint">Selecione todos os que se aplicam</div>
+        <div class="checkbox-group" id="detalhesGroup">
+          <label><input type="checkbox" value="Franjas na barra"><span>Franjas na barra</span></label>
+          <label><input type="checkbox" value="Fake fur"><span>Fake fur</span></label>
+          <label><input type="checkbox" value="Capuz"><span>Capuz</span></label>
+          <label><input type="checkbox" value="Bolsos frontais"><span>Bolsos frontais</span></label>
+          <label><input type="checkbox" value="Bolsos embutidos"><span>Bolsos embutidos</span></label>
+          <label><input type="checkbox" value="Punhos"><span>Punhos</span></label>
+          <label><input type="checkbox" value="Cos elastico"><span>Cos elastico</span></label>
+          <label><input type="checkbox" value="Pregas laterais"><span>Pregas laterais</span></label>
+          <label><input type="checkbox" value="Cava reta"><span>Cava reta</span></label>
+          <label><input type="checkbox" value="Folhos"><span>Folhos</span></label>
+          <label><input type="checkbox" value="Ombros caidos"><span>Ombros caidos</span></label>
+          <label><input type="checkbox" value="Fenda lateral"><span>Fenda lateral</span></label>
+          <label><input type="checkbox" value="Barra assimetrica"><span>Barra assimetrica</span></label>
+          <label><input type="checkbox" value="Gola avulsa"><span>Gola avulsa</span></label>
+          <label><input type="checkbox" value="Cut-out"><span>Cut-out</span></label>
+          <label><input type="checkbox" value="Cordao"><span>Cordao</span></label>
+          <label><input type="checkbox" value="Apliques"><span>Apliques</span></label>
+          <label><input type="checkbox" value="Barra ribana"><span>Barra ribana</span></label>
+          <label><input type="checkbox" value="Sem costura"><span>Sem costura</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Outros Detalhes (texto livre)</label>
+        <textarea id="detalhesLivre" rows="2" placeholder="Descreva qualquer detalhe adicional que nao esteja nas opcoes acima..."></textarea>
+      </div>
+
+      <!-- CONTEXTO -->
+      <div class="section-title">Contexto Extra <span class="badge">Opcional</span></div>
+
+      <div class="two-cols">
+        <div class="form-group">
+          <label>Instrucoes de Cuidado</label>
+          <input type="text" id="cuidado" placeholder="Ex: Lavagem a mao, Lavar a seco...">
+        </div>
+        <div class="form-group">
+          <label>Preco</label>
+          <input type="text" id="preco" placeholder="Ex: R$ 389,90">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Observacoes / Contexto Adicional</label>
+        <textarea id="observacoes" rows="3" placeholder="Publico-alvo especial, uso pretendido, destaque de campanha..."></textarea>
+      </div>
+
+      <!-- FOTOS -->
+      <div class="section-title">Fotos do Produto <span class="badge">Recomendado</span></div>
+      <div class="hint" style="margin-bottom:16px; font-size:11px; color:var(--text-muted);">Ate 2 fotos still + 1 foto na modelo. JPG ou PNG, max 5MB cada.</div>
+
+      <div class="photos-grid">
+        <!-- STILL 1 -->
+        <div class="photo-slot" id="slotStill1" onclick="document.getElementById('inputStill1').click()">
+          <span class="slot-tag">STILL</span>
+          <input type="file" id="inputStill1" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, 'still1')">
+          <div class="slot-icon">&#128247;</div>
+          <div class="slot-label">Foto Still 1</div>
+          <div class="slot-hint">Frente / Principal</div>
+        </div>
+
+        <!-- STILL 2 -->
+        <div class="photo-slot" id="slotStill2" onclick="document.getElementById('inputStill2').click()">
+          <span class="slot-tag">STILL</span>
+          <input type="file" id="inputStill2" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, 'still2')">
+          <div class="slot-icon">&#128247;</div>
+          <div class="slot-label">Foto Still 2</div>
+          <div class="slot-hint">Costas / Detalhe</div>
+        </div>
+
+        <!-- MODELO -->
+        <div class="photo-slot" id="slotModelo" onclick="document.getElementById('inputModelo').click()">
+          <span class="slot-tag" style="background:#6B6461;">MODELO</span>
+          <input type="file" id="inputModelo" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, 'modelo')">
+          <div class="slot-icon">&#128100;</div>
+          <div class="slot-label">Foto Modelo</div>
+          <div class="slot-hint">Se houver</div>
+        </div>
+      </div>
+      <div class="photo-counter" id="photoCounter">0 de 3 fotos adicionadas</div>
+
+      <!-- BUTTONS -->
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" onclick="clearForm()">Limpar</button>
+        <button type="button" class="btn btn-primary" id="btnEnviar" onclick="enviarParaSlides()">Enviar ao Slides</button>
+      </div>
+
+    </form>
+
+    <div id="formStatus" class="status-banner"></div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <svg viewBox="0 0 841.89 136.1" xmlns="http://www.w3.org/2000/svg" style="height:20px;fill:#D4C9BD;"><path d="M113.72,107.53h-54.11l-6.43,17.9h-31.82L65.08,10.66h43.17l43.72,114.77h-31.84l-6.41-17.9ZM105.51,84.44l-15.98-44.8h-5.61l-16.12,44.8h37.7Z"/><path d="M163.55,10.66h35.66l48.23,72.15h2.73V10.66h30.06v114.77h-34.84l-48.92-72.15h-2.86v72.15h-30.06V10.66Z"/><path d="M293.98,88.95h27.88c.69,9.7,8.88,15.99,26.92,15.99,16.67.14,25.27-5.19,25.27-12.98,0-6.56-4.92-10.53-17.76-12.57l-14.35-2.47c-21.86-3.69-44.94-8.47-44.94-34.84,0-22,18.43-35.25,51.92-35.25,31.02,0,52.46,9.98,52.46,39.9h-27.6c-1.63-9.43-9.16-15.71-25.41-15.71-14.62,0-21.72,4.91-21.72,12.43,0,5.87,4.37,10.1,15.02,11.88l12.44,2.19c22.13,3.96,50.55,6.69,50.55,35.37,0,23.64-19,36.48-55.88,36.35-36.62,0-55.21-12.43-54.79-40.31Z"/><path d="M418,10.66h98.91v25.01h-68.03v21.59h65.58v21.45h-65.58v21.72h68.03v25h-98.91V10.66Z"/><path d="M532.59,10.66h30.88v88.95h64.48v25.82h-95.36V10.66Z"/><path d="M642.95,10.66h39.21l25.14,75.42h2.33l25.14-75.42h39.21v114.77h-29.51v-62.99h-2.6l-21.59,62.99h-23.64l-21.59-62.99h-2.59v62.99h-29.51V10.66Z"/><path d="M789.65,10.66h30.88v114.77h-30.88V10.66Z"/></svg>
+  <p>Ferramenta interna &mdash; Cadastro de produto para descricoes de e-commerce</p>
+</div>
+
+<div id="toast" class="copy-toast"></div>
+
+<script>
+  // ===== PHOTO STATE =====
+  const photos = { still1: null, still2: null, modelo: null };
+  const photoNames = { still1: null, still2: null, modelo: null };
+
+  function handlePhoto(event, slotKey) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('A foto deve ter no maximo 5MB.');
+      event.target.value = '';
+      return;
+    }
+
+    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
+      alert('Formato invalido. Use JPG, PNG ou WebP.');
+      event.target.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      photos[slotKey] = e.target.result;
+      photoNames[slotKey] = file.name;
+      showPhotoInSlot(slotKey, e.target.result, file.name);
+      updatePhotoCounter();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function showPhotoInSlot(slotKey, dataUrl, fileName) {
+    const slotId = slotKey === 'still1' ? 'slotStill1' : slotKey === 'still2' ? 'slotStill2' : 'slotModelo';
+    const inputId = slotKey === 'still1' ? 'inputStill1' : slotKey === 'still2' ? 'inputStill2' : 'inputModelo';
+    const tagText = slotKey === 'modelo' ? 'MODELO' : 'STILL';
+    const tagStyle = slotKey === 'modelo' ? ' style="background:#6B6461;"' : '';
+    const slot = document.getElementById(slotId);
+    slot.classList.add('has-image');
+    slot.innerHTML = `
+      <span class="slot-tag"${tagStyle}>${tagText}</span>
+      <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}');">
+      <button type="button" class="photo-remove" onclick="event.stopPropagation(); removePhoto('${slotKey}');">&times;</button>
+      <img src="${dataUrl}" class="photo-preview" alt="${tagText}">
+      <div class="photo-name">${fileName}</div>
+    `;
+  }
+
+  function removePhoto(slotKey) {
+    photos[slotKey] = null;
+    photoNames[slotKey] = null;
+    const slotId = slotKey === 'still1' ? 'slotStill1' : slotKey === 'still2' ? 'slotStill2' : 'slotModelo';
+    const inputId = slotKey === 'still1' ? 'inputStill1' : slotKey === 'still2' ? 'inputStill2' : 'inputModelo';
+    const isModelo = slotKey === 'modelo';
+    const slot = document.getElementById(slotId);
+    slot.classList.remove('has-image');
+
+    if (isModelo) {
+      slot.innerHTML = `
+        <span class="slot-tag" style="background:#6B6461;">MODELO</span>
+        <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}')">
+        <div class="slot-icon">&#128100;</div>
+        <div class="slot-label">Foto Modelo</div>
+        <div class="slot-hint">Se houver</div>
+      `;
+    } else {
+      const num = slotKey === 'still1' ? '1' : '2';
+      const hintText = num === '1' ? 'Frente / Principal' : 'Costas / Detalhe';
+      slot.innerHTML = `
+        <span class="slot-tag">STILL</span>
+        <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}')">
+        <div class="slot-icon">&#128247;</div>
+        <div class="slot-label">Foto Still ${num}</div>
+        <div class="slot-hint">${hintText}</div>
+      `;
+    }
+    updatePhotoCounter();
+  }
+
+  function updatePhotoCounter() {
+    const count = Object.values(photos).filter(Boolean).length;
+    document.getElementById('photoCounter').textContent = `${count} de 3 fotos adicionadas`;
+  }
+
+  // ===== DRAG & DROP =====
+  document.querySelectorAll('.photo-slot').forEach(slot => {
+    ['dragenter', 'dragover'].forEach(evt => {
+      slot.addEventListener(evt, e => { e.preventDefault(); slot.style.borderColor = 'var(--black)'; });
+    });
+    ['dragleave', 'drop'].forEach(evt => {
+      slot.addEventListener(evt, e => { e.preventDefault(); slot.style.borderColor = ''; });
+    });
+    slot.addEventListener('drop', e => {
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        const slotKey = slot.id === 'slotStill1' ? 'still1' : slot.id === 'slotStill2' ? 'still2' : 'modelo';
+        const inputId = slot.id === 'slotStill1' ? 'inputStill1' : slot.id === 'slotStill2' ? 'inputStill2' : 'inputModelo';
+        const input = document.getElementById(inputId);
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        input.files = dt.files;
+        handlePhoto({ target: input }, slotKey);
+      }
+    });
+  });
+
+  // ===== TOGGLE "OUTRO" FIELDS =====
+  function toggleOutro(selectId, outroInputId) {
+    const sel = document.getElementById(selectId);
+    const inp = document.getElementById(outroInputId);
+    if (sel.value === '__outro__') {
+      inp.style.display = 'block';
+      inp.focus();
+    } else {
+      inp.style.display = 'none';
+      inp.value = '';
+    }
+  }
+
+  function toggleOutroGola() {
+    const sel = document.getElementById('golaDecote');
+    const inp = document.getElementById('golaDecoteOutro');
+    if (sel.value === 'outro|__outro__') {
+      inp.style.display = 'block';
+      inp.focus();
+    } else {
+      inp.style.display = 'none';
+      inp.value = '';
+    }
+  }
+
+  // Fechamento "Outro"
+  document.querySelectorAll('input[name="fecho"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const inp = document.getElementById('fechoOutro');
+      if (r.value === 'Outro') {
+        inp.style.display = 'block';
+        inp.focus();
+      } else {
+        inp.style.display = 'none';
+        inp.value = '';
+      }
+    });
+  });
+
+  // ===== FORM HELPERS =====
+  document.querySelectorAll('input[name="tipo"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('tipoOutroGroup').style.display = r.value === 'Outro' ? 'block' : 'none';
+    });
+  });
+  document.querySelectorAll('input[name="ponto"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('pontoOutroGroup').style.display = r.value === 'Outro' ? 'block' : 'none';
+    });
+  });
+
+  function updatePrepHint() {
+    const val = document.getElementById('golaDecote').value;
+    const hint = document.getElementById('prepHint');
+    if (!val) { hint.style.display = 'none'; return; }
+    const tipo = val.split('|')[0];
+    if (tipo === 'gola') {
+      hint.textContent = 'usar DE';
+      hint.className = 'prep-hint de';
+      hint.style.display = 'inline-block';
+    } else if (tipo === 'decote') {
+      hint.textContent = 'usar COM';
+      hint.className = 'prep-hint com';
+      hint.style.display = 'inline-block';
+    } else {
+      hint.style.display = 'none';
+    }
+  }
+
+  function getFormData() {
+    const tipoRadio = document.querySelector('input[name="tipo"]:checked');
+    let tipo = tipoRadio ? tipoRadio.value : '';
+    if (tipo === 'Outro') tipo = document.getElementById('tipoOutro').value || 'Outro';
+
+    const pontoRadio = document.querySelector('input[name="ponto"]:checked');
+    let ponto = pontoRadio ? pontoRadio.value : '';
+    if (ponto === 'Outro') ponto = document.getElementById('pontoOutro').value || 'Outro';
+
+    const fechoRadio = document.querySelector('input[name="fecho"]:checked');
+    let fecho = fechoRadio ? fechoRadio.value : '';
+    if (fecho === 'Outro') fecho = document.getElementById('fechoOutro').value || 'Outro';
+
+    const golaDecoteVal = document.getElementById('golaDecote').value;
+    let golaDecote = '', golaDecoteTipo = '';
+    if (golaDecoteVal === 'outro|__outro__') {
+      golaDecoteTipo = 'outro';
+      golaDecote = document.getElementById('golaDecoteOutro').value || 'Outro';
+    } else if (golaDecoteVal) {
+      const parts = golaDecoteVal.split('|');
+      golaDecoteTipo = parts[0];
+      golaDecote = parts[1];
+    }
+
+    // Manga com "Outro"
+    let manga = document.getElementById('manga').value;
+    if (manga === '__outro__') manga = document.getElementById('mangaOutro').value || 'Outro';
+
+    // Modelagem com "Outro"
+    let modelagem = document.getElementById('modelagem').value;
+    if (modelagem === '__outro__') modelagem = document.getElementById('modelagemOutro').value || 'Outro';
+
+    // Comprimento com "Outro"
+    let comprimento = document.getElementById('comprimento').value;
+    if (comprimento === '__outro__') comprimento = document.getElementById('comprimentoOutro').value || 'Outro';
+
+    const detalhes = [];
+    document.querySelectorAll('#detalhesGroup input:checked').forEach(cb => detalhes.push(cb.value));
+
+    return {
+      source: 'cadastro',
+      nome: document.getElementById('nome').value,
+      codigo: document.getElementById('codigo').value,
+      tipo,
+      colecao: document.getElementById('colecao').value,
+      composicao: document.getElementById('composicao').value,
+      ponto,
+      golaDecote,
+      golaDecoteTipo,
+      manga,
+      modelagem,
+      comprimento,
+      fecho,
+      detalhes,
+      detalhesLivre: document.getElementById('detalhesLivre').value,
+      cor: document.getElementById('cor').value,
+      corSecundaria: document.getElementById('corSecundaria').value,
+      cuidado: document.getElementById('cuidado').value,
+      preco: document.getElementById('preco').value,
+      observacoes: document.getElementById('observacoes').value,
+      fotoStill1: photos.still1 || null,
+      fotoStill1Nome: photoNames.still1 || null,
+      fotoStill2: photos.still2 || null,
+      fotoStill2Nome: photoNames.still2 || null,
+      fotoModelo: photos.modelo || null,
+      fotoModeloNome: photoNames.modelo || null,
+    };
+  }
+
+  function clearForm() {
+    document.getElementById('produtoForm').reset();
+    document.getElementById('tipoOutroGroup').style.display = 'none';
+    document.getElementById('pontoOutroGroup').style.display = 'none';
+    document.getElementById('prepHint').style.display = 'none';
+    document.getElementById('formStatus').className = 'status-banner';
+    // Esconder todos os campos "Outro"
+    document.querySelectorAll('.campo-outro').forEach(el => { el.style.display = 'none'; el.value = ''; });
+    removePhoto('still1');
+    removePhoto('still2');
+    removePhoto('modelo');
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  function showStatus(type, message) {
+    const el = document.getElementById('formStatus');
+    el.className = `status-banner ${type} visible`;
+    el.textContent = message;
+    if (type === 'success') {
+      setTimeout(() => { el.className = 'status-banner'; }, 6000);
+    }
+  }
+
+  // ===== GOOGLE SLIDES =====
+  const CONFIG_KEY = 'anselmi_cadastro_config';
+
+  function getAppsScriptUrl() {
+    return document.getElementById('appsScriptUrl').value.trim();
+  }
+
+  function saveConfig() {
+    const url = getAppsScriptUrl();
+    try { localStorage.setItem(CONFIG_KEY, JSON.stringify({ url })); } catch(e) {}
+    updateConfigStatus(url);
+  }
+
+  function loadConfig() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
+      if (saved.url) {
+        document.getElementById('appsScriptUrl').value = saved.url;
+        updateConfigStatus(saved.url);
+      }
+    } catch(e) {}
+  }
+
+  function updateConfigStatus(url) {
+    const status = document.getElementById('configStatus');
+    if (url && url.startsWith('https://script.google.com')) {
+      status.className = 'status-banner success visible';
+      status.textContent = 'URL configurada. O botao "Enviar ao Slides" esta ativo.';
+    } else if (url) {
+      status.className = 'status-banner error visible';
+      status.textContent = 'URL invalida. Deve comecar com https://script.google.com';
+    } else {
+      status.className = 'status-banner info';
+      status.style.display = 'flex';
+      status.textContent = 'Sem URL configurada. O botao "Enviar ao Slides" ficara desativado.';
+    }
+  }
+
+  function toggleConfig() {
+    document.getElementById('configPanel').classList.toggle('visible');
+  }
+
+  async function enviarParaSlides() {
+    const url = getAppsScriptUrl();
+    if (!url || !url.startsWith('https://script.google.com')) {
+      toggleConfig();
+      showToast('Configure a URL do Apps Script primeiro');
+      return;
+    }
+
+    const data = getFormData();
+    if (!data.nome && !data.tipo) {
+      alert('Preencha pelo menos o nome e tipo da peca.');
+      return;
+    }
+
+    const btn = document.getElementById('btnEnviar');
+    btn.classList.add('sending');
+    btn.textContent = 'Enviando...';
+    showStatus('info', 'Enviando dados e fotos para Google Slides...');
+
+    try {
+      await fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(data),
+      });
+
+      const fotoCount = [data.fotoStill1, data.fotoStill2, data.fotoModelo].filter(Boolean).length;
+      showStatus('success', `Produto cadastrado no Google Slides com sucesso! (${fotoCount} foto${fotoCount !== 1 ? 's' : ''} enviada${fotoCount !== 1 ? 's' : ''})`);
+      showToast('Slide criado no Google Slides');
+    } catch (error) {
+      showStatus('error', 'Erro ao enviar: ' + error.message);
+    } finally {
+      btn.classList.remove('sending');
+      btn.textContent = 'Enviar ao Slides';
+    }
+  }
+
+  // Init
+  loadConfig();
+</script>
+
+</body>
+</html>
