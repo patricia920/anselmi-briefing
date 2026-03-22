@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anselmi — Ferramentas de Produto</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --black: #231F20; --white: #FFFFFF; --cream: #F5F0EB; --beige: #D4C9BD; --text-light: #6B6461; --text-muted: #9B9490; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Montserrat', sans-serif; color: var(--black); background: var(--cream); min-height: 100vh; display: flex; flex-direction: column; }
+  .header { background: var(--black); padding: 40px 20px; text-align: center; }
+  .header svg { height: 32px; fill: var(--white); }
+  .header p { color: var(--beige); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; margin-top: 12px; }
+  .container { max-width: 700px; margin: 60px auto; padding: 0 24px; flex: 1; }
+  h2 { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 24px; text-align: center; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 540px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--white); padding: 36px 28px; text-decoration: none; color: var(--black);
+    border: 1px solid var(--beige); transition: all 0.3s; display: block;
+  }
+  .card:hover { border-color: var(--black); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(35,31,32,0.08); }
+  .card .icon { font-size: 32px; margin-bottom: 16px; }
+  .card .title { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .card .desc { font-size: 12px; color: var(--text-light); line-height: 1.6; }
+  .footer { text-align: center; padding: 40px 20px; }
+  .footer p { font-size: 10px; color: var(--beige); letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <svg viewBox="0 0 841.89 136.1" xmlns="http://www.w3.org/2000/svg"><path d="M113.72,107.53h-54.11l-6.43,17.9h-31.82L65.08,10.66h43.17l43.72,114.77h-31.84l-6.41-17.9ZM105.51,84.44l-15.98-44.8h-5.61l-16.12,44.8h37.7Z"/><path d="M163.55,10.66h35.66l48.23,72.15h2.73V10.66h30.06v114.77h-34.84l-48.92-72.15h-2.86v72.15h-30.06V10.66Z"/><path d="M293.98,88.95h27.88c.69,9.7,8.88,15.99,26.92,15.99,16.67.14,25.27-5.19,25.27-12.98,0-6.56-4.92-10.53-17.76-12.57l-14.35-2.47c-21.86-3.69-44.94-8.47-44.94-34.84,0-22,18.43-35.25,51.92-35.25,31.02,0,52.46,9.98,52.46,39.9h-27.6c-1.63-9.43-9.16-15.71-25.41-15.71-14.62,0-21.72,4.91-21.72,12.43,0,5.87,4.37,10.1,15.02,11.88l12.44,2.19c22.13,3.96,50.55,6.69,50.55,35.37,0,23.64-19,36.48-55.88,36.35-36.62,0-55.21-12.43-54.79-40.31Z"/><path d="M418,10.66h98.91v25.01h-68.03v21.59h65.58v21.45h-65.58v21.72h68.03v25h-98.91V10.66Z"/><path d="M532.59,10.66h30.88v88.95h64.48v25.82h-95.36V10.66Z"/><path d="M642.95,10.66h39.21l25.14,75.42h2.33l25.14-75.42h39.21v114.77h-29.51v-62.99h-2.6l-21.59,62.99h-23.64l-21.59-62.99h-2.59v62.99h-29.51V10.66Z"/><path d="M789.65,10.66h30.88v114.77h-30.88V10.66Z"/></svg>
+  <p>Ferramentas de Produto</p>
+</div>
+
+<div class="container">
+  <h2>Escolha uma ferramenta</h2>
+  <div class="cards">
+    <a href="Cadastro_Produto_Anselmi.html" class="card">
+      <div class="icon">&#128230;</div>
+      <div class="title">Cadastro de Produto</div>
+      <div class="desc">Preencha as informacoes do produto com fotos still e modelo. Envia direto para o Google Slides.</div>
+    </a>
+    <a href="Formulario_Briefing_Produto_v2.html" class="card">
+      <div class="icon">&#9997;</div>
+      <div class="title">Briefing para Descricao</div>
+      <div class="desc">Gere prompts formatados para a skill de descricoes, com escolha de modo e estilo de marca.</div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Anselmi &mdash; Ferramenta interna de e-commerce</p>
+</div>
+</body>
+</html>
