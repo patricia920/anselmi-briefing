@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anselmi — Formulário de Briefing v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #231F20;
+    --white: #FFFFFF;
+    --cream: #F5F0EB;
+    --cream-light: #FAF8F5;
+    --beige: #E8E0D8;
+    --beige-dark: #D4C9BD;
+    --text: #231F20;
+    --text-light: #6B6461;
+    --text-muted: #9B9490;
+    --border: #D4C9BD;
+    --border-light: #E8E0D8;
+    --red: #C85A54;
+    --green: #5B8C5A;
+    --blue-hint: #DAE5F0;
+    --pink-hint: #F5E0E8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Montserrat', -apple-system, sans-serif; color: var(--text); line-height: 1.6; background: var(--cream); }
+
+  /* ===== HEADER ===== */
+  .top-bar { background: var(--black); color: #fff; text-align: center; padding: 10px 20px; font-size: 11px; letter-spacing: 2px; font-weight: 400; text-transform: uppercase; }
+  .header { background: var(--white); padding: 24px 0; text-align: center; border-bottom: 1px solid var(--border-light); }
+  .header .logo { height: 28px; margin-bottom: 8px; }
+  .header .subtitle { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); font-weight: 400; }
+  .header .version { font-size: 10px; color: var(--beige-dark); margin-top: 4px; letter-spacing: 1px; }
+
+  /* ===== NAV (tabs) ===== */
+  .nav-bar { background: var(--white); border-bottom: 1px solid var(--border-light); display: flex; justify-content: center; gap: 40px; padding: 0; }
+  .nav-tab {
+    padding: 14px 4px; background: none; border: none; border-bottom: 2px solid transparent;
+    cursor: pointer; font-family: inherit; font-size: 12px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); transition: all 0.3s;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--text); border-bottom-color: var(--black); }
+
+  /* ===== CONTAINER ===== */
+  .container { max-width: 840px; margin: 40px auto; padding: 0 24px; }
+
+  /* ===== FORM CARD ===== */
+  .form-card { background: var(--white); border-radius: 2px; box-shadow: 0 1px 4px rgba(35,31,32,0.06); padding: 40px; }
+
+  .section-title {
+    font-size: 11px; color: var(--text); font-weight: 600; margin: 36px 0 18px;
+    letter-spacing: 3px; text-transform: uppercase; padding-bottom: 10px;
+    border-bottom: 1px solid var(--black); display: flex; align-items: center; gap: 10px;
+  }
+  .section-title:first-child { margin-top: 0; }
+  .section-title .badge {
+    font-size: 9px; background: var(--black); color: var(--white); padding: 3px 10px;
+    border-radius: 0; font-weight: 500; letter-spacing: 1.5px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+  .form-group > label {
+    display: block; font-weight: 500; font-size: 11px; color: var(--text-light);
+    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .form-group .hint { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: 400; }
+
+  input[type="text"], textarea, select {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 0;
+    font-size: 13px; font-family: inherit; transition: border 0.3s; background: var(--white); color: var(--text);
+  }
+  input::placeholder, textarea::placeholder { color: var(--beige-dark); }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--black); }
+  textarea { resize: vertical; min-height: 70px; }
+  select { cursor: pointer; background: var(--white); -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23231F20' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+  }
+
+  /* Radio & Checkbox pills */
+  .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .radio-group label, .checkbox-group label {
+    display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+    border: 1px solid var(--border); border-radius: 0; cursor: pointer;
+    font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0.3px;
+    transition: all 0.2s; background: var(--white); color: var(--text-light);
+  }
+  .radio-group label:hover, .checkbox-group label:hover { border-color: var(--black); color: var(--text); }
+  .radio-group input, .checkbox-group input { display: none; }
+  .radio-group label:has(input:checked), .checkbox-group label:has(input:checked) {
+    border-color: var(--black); background: var(--black); color: var(--white); font-weight: 500;
+  }
+
+  .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  @media (max-width: 640px) {
+    .two-cols, .three-cols { grid-template-columns: 1fr; }
+    .form-card { padding: 24px; }
+    .container { padding: 0 16px; margin: 24px auto; }
+    .modo-cards { grid-template-columns: 1fr 1fr !important; }
+    .nav-bar { gap: 20px; }
+  }
+
+  /* ===== MODO CARDS ===== */
+  .modo-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+  .modo-card {
+    position: relative; border: 1px solid var(--border); border-radius: 0; padding: 20px 16px 16px;
+    cursor: pointer; transition: all 0.3s; background: var(--white); text-align: center;
+  }
+  .modo-card:hover { border-color: var(--black); }
+  .modo-card.selected { border-color: var(--black); background: var(--black); }
+  .modo-card.selected .modo-name, .modo-card.selected .modo-ref, .modo-card.selected .modo-desc { color: var(--white); }
+  .modo-card input { position: absolute; opacity: 0; pointer-events: none; }
+  .modo-card .modo-name { font-weight: 600; font-size: 12px; color: var(--text); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
+  .modo-card .modo-ref { font-size: 10px; color: var(--text-muted); letter-spacing: 0.5px; }
+  .modo-card .modo-desc { font-size: 10px; color: var(--text-light); margin-top: 8px; line-height: 1.5; }
+
+  /* ===== MULTI-MARCA OPTIONS ===== */
+  .brand-options { display: none; margin-top: 16px; padding: 20px; background: var(--cream-light); border: 1px solid var(--border-light); }
+  .brand-options.visible { display: block; }
+  .brand-chip {
+    display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px;
+    border: 1px solid var(--border); cursor: pointer;
+    font-size: 12px; transition: all 0.2s; background: var(--white); margin: 4px; letter-spacing: 0.5px;
+  }
+  .brand-chip:hover { border-color: var(--black); }
+  .brand-chip.selected { border-color: var(--black); background: var(--black); color: var(--white); }
+  .brand-chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .brand-chip .flag { font-size: 14px; }
+
+  /* Estilo especifico */
+  .estilo-especifico-options { display: none; margin-top: 16px; }
+  .estilo-especifico-options.visible { display: block; }
+
+  /* ===== BUTTONS ===== */
+  .btn-row { display: flex; gap: 12px; margin-top: 36px; justify-content: flex-end; flex-wrap: wrap; }
+  .btn {
+    padding: 14px 32px; border: none; border-radius: 0; font-size: 11px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s; font-family: inherit; letter-spacing: 2px; text-transform: uppercase;
+  }
+  .btn-primary { background: var(--black); color: var(--white); }
+  .btn-primary:hover { background: #3a3536; }
+  .btn-secondary { background: var(--white); color: var(--text); border: 1px solid var(--black); }
+  .btn-secondary:hover { background: var(--cream-light); }
+  .btn-add { background: var(--white); color: var(--text); border: 1px solid var(--border); }
+  .btn-add:hover { border-color: var(--black); }
+
+  /* ===== OUTPUT ===== */
+  .output-area {
+    background: var(--cream-light); border: 1px solid var(--border); padding: 28px;
+    margin-top: 28px; white-space: pre-wrap; font-family: 'Courier New', monospace;
+    font-size: 12px; line-height: 1.8; display: none; position: relative; color: var(--text);
+  }
+  .output-area.visible { display: block; }
+  .copy-btn-inline {
+    position: absolute; top: 12px; right: 12px; background: var(--black); border: none;
+    color: var(--white); padding: 8px 16px; cursor: pointer; font-size: 10px;
+    font-family: inherit; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: all 0.3s;
+  }
+  .copy-btn-inline:hover { background: #3a3536; }
+
+  .required::after { content: " *"; color: var(--red); font-weight: 400; }
+
+  /* Tab content */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .copy-toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    background: var(--black); color: var(--white); padding: 14px 32px;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100;
+  }
+  .copy-toast.show { opacity: 1; }
+
+  .produtos-list { margin-top: 16px; }
+  .produto-item {
+    background: var(--cream-light); border: 1px solid var(--border-light); padding: 14px 18px;
+    margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .produto-item .info { font-size: 12px; letter-spacing: 0.3px; }
+  .produto-item .info strong { color: var(--text); font-weight: 600; }
+  .produto-item .remove { background: none; border: none; color: var(--red); cursor: pointer; font-size: 18px; padding: 0 4px; }
+
+  /* Preposition hint */
+  .prep-hint { display: inline-block; font-size: 10px; padding: 3px 10px; margin-left: 8px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .prep-hint.de { background: var(--blue-hint); color: #2E5A88; }
+  .prep-hint.com { background: var(--pink-hint); color: #8C3A5A; }
+
+  #batchCount { font-size: 11px; color: var(--text-muted); margin-top: 8px; display: none; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ===== PHOTO UPLOAD ===== */
+  .photo-upload-area {
+    border: 2px dashed var(--border); padding: 24px; text-align: center;
+    cursor: pointer; transition: all 0.3s; position: relative; min-height: 160px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    background: var(--cream-light);
+  }
+  .photo-upload-area:hover { border-color: var(--black); background: var(--white); }
+  .photo-upload-area.has-image { border-style: solid; border-color: var(--border); padding: 12px; }
+  .photo-upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .photo-upload-area .upload-icon { font-size: 28px; color: var(--beige-dark); line-height: 1; }
+  .photo-upload-area .upload-text { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+  .photo-upload-area .upload-hint { font-size: 10px; color: var(--beige-dark); }
+  .photo-preview { max-width: 200px; max-height: 200px; object-fit: contain; }
+  .photo-remove {
+    position: absolute; top: 8px; right: 8px; background: var(--black); color: var(--white);
+    border: none; width: 24px; height: 24px; cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center; opacity: 0.7; transition: opacity 0.2s;
+  }
+  .photo-remove:hover { opacity: 1; }
+  .photo-name { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ===== FOOTER ===== */
+  .footer { text-align: center; padding: 40px 20px; }
+  .footer img { height: 20px; opacity: 0.3; }
+  .footer p { font-size: 10px; color: var(--beige-dark); margin-top: 8px; letter-spacing: 1px; }
+
+  /* Google Slides button */
+  .btn-slides {
+    background: var(--white); color: var(--text); border: 1px solid var(--border);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-slides:hover { border-color: var(--black); }
+  .btn-slides svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .btn-slides.sending { opacity: 0.5; pointer-events: none; }
+
+  /* Status banner */
+  .status-banner {
+    margin-top: 16px; padding: 14px 20px; font-size: 12px; letter-spacing: 0.3px;
+    display: none; align-items: center; gap: 10px;
+  }
+  .status-banner.visible { display: flex; }
+  .status-banner.success { background: #EAF4EA; color: #2D5A2D; border: 1px solid #B8D8B8; }
+  .status-banner.error { background: #FAECEB; color: #8C3A3A; border: 1px solid #E0BABA; }
+  .status-banner.info { background: var(--cream-light); color: var(--text-light); border: 1px solid var(--border); }
+
+  /* Config panel */
+  .config-panel {
+    background: var(--cream-light); border: 1px solid var(--border-light); padding: 20px;
+    margin-bottom: 28px; display: none;
+  }
+  .config-panel.visible { display: block; }
+  .config-panel .config-title {
+    font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 12px;
+  }
+  .config-panel input[type="text"] { border: 1px solid var(--border); }
+  .config-toggle {
+    font-size: 11px; color: var(--text-muted); cursor: pointer; text-decoration: underline;
+    background: none; border: none; font-family: inherit; letter-spacing: 0.5px; margin-bottom: 16px;
+  }
+  .config-toggle:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">Formulario de Briefing de Produto</div>
+
+<!-- HEADER -->
+<div class="header">
+  <svg class="logo" viewBox="0 0 841.89 136.1" xmlns="http://www.w3.org/2000/svg" style="height:28px;fill:#231F20;"><path d="M113.72,107.53h-54.11l-6.43,17.9h-31.82L65.08,10.66h43.17l43.72,114.77h-31.84l-6.41-17.9ZM105.51,84.44l-15.98-44.8h-5.61l-16.12,44.8h37.7Z"/><path d="M163.55,10.66h35.66l48.23,72.15h2.73V10.66h30.06v114.77h-34.84l-48.92-72.15h-2.86v72.15h-30.06V10.66Z"/><path d="M293.98,88.95h27.88c.69,9.7,8.88,15.99,26.92,15.99,16.67.14,25.27-5.19,25.27-12.98,0-6.56-4.92-10.53-17.76-12.57l-14.35-2.47c-21.86-3.69-44.94-8.47-44.94-34.84,0-22,18.43-35.25,51.92-35.25,31.02,0,52.46,9.98,52.46,39.9h-27.6c-1.63-9.43-9.16-15.71-25.41-15.71-14.62,0-21.72,4.91-21.72,12.43,0,5.87,4.37,10.1,15.02,11.88l12.44,2.19c22.13,3.96,50.55,6.69,50.55,35.37,0,23.64-19,36.48-55.88,36.35-36.62,0-55.21-12.43-54.79-40.31Z"/><path d="M418,10.66h98.91v25.01h-68.03v21.59h65.58v21.45h-65.58v21.72h68.03v25h-98.91V10.66Z"/><path d="M532.59,10.66h30.88v88.95h64.48v25.82h-95.36V10.66Z"/><path d="M642.95,10.66h39.21l25.14,75.42h2.33l25.14-75.42h39.21v114.77h-29.51v-62.99h-2.6l-21.59,62.99h-23.64l-21.59-62.99h-2.59v62.99h-29.51V10.66Z"/><path d="M789.65,10.66h30.88v114.77h-30.88V10.66Z"/></svg>
+  <div class="subtitle">Briefing para Descricoes de E-commerce</div>
+  <div class="version">v2 &mdash; Compativel com Skill anselmi-descricoes v7</div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-bar">
+  <button class="nav-tab active" onclick="switchTab('single')">Produto Individual</button>
+  <button class="nav-tab" onclick="switchTab('batch')">Lote</button>
+</div>
+
+<div class="container">
+
+  <!-- CONFIG PANEL -->
+  <button class="config-toggle" onclick="toggleConfig()">Configurar Google Slides</button>
+  <div id="configPanel" class="config-panel">
+    <div class="config-title">Integracao Google Slides</div>
+    <div class="form-group">
+      <label>URL do Google Apps Script (Web App)</label>
+      <div class="hint">Cole aqui a URL gerada ao implantar o Apps Script. Veja as instrucoes no arquivo SETUP.md</div>
+          <div class="hint" style="margin-bottom:10px; font-size:11px; color:var(--text-muted);">Quais marcas incluir? (padrao: todas as 5)</div>
+          <div id="brandChips">
+            <label class="brand-chip selected" onclick="toggleBrand(this)">
+              <input type="checkbox" value="COS" checked><span class="flag">&#127466;&#127480;</span><span>COS</span>
+            </label>
+            <label class="brand-chip selected" onclick="toggleBrand(this)">
+              <input type="checkbox" value="Massimo Dutti" checked><span class="flag">&#127468;&#127463;</span><span>Massimo Dutti</span>
+            </label>
+            <label class="brand-chip selected" onclick="toggleBrand(this)">
+              <input type="checkbox" value="Arket" checked><span class="flag">&#127468;&#127463;</span><span>Arket</span>
+            </label>
+            <label class="brand-chip selected" onclick="toggleBrand(this)">
+              <input type="checkbox" value="H&M" checked><span class="flag">&#127463;&#127479;</span><span>H&amp;M</span>
+            </label>
+            <label class="brand-chip selected" onclick="toggleBrand(this)">
+              <input type="checkbox" value="Aritzia" checked><span class="flag">&#127468;&#127463;</span><span>Aritzia</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Estilo Especifico brand selection -->
+        <div id="estiloOptions" class="estilo-especifico-options">
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Qual marca?</label>
+            <select id="estiloMarca">
+              <option value="">Selecione a marca...</option>
+              <option value="COS">COS &mdash; Editorial, Espanhol</option>
+              <option value="Zara">Zara &mdash; Tecnico Objetivo, Portugues BR</option>
+              <option value="Massimo Dutti">Massimo Dutti &mdash; Luxo Acessivel, Ingles</option>
+              <option value="Arket">Arket &mdash; Artesanal Minimalista, Ingles</option>
+              <option value="H&M">H&amp;M &mdash; Tecnico Funcional, Portugues BR</option>
+              <option value="Aritzia">Aritzia &mdash; Conversacional, Ingles</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- INFORMACOES BASICAS -->
+        <div class="section-title">Informacoes Basicas</div>
+
+        <div class="two-cols">
+          <div class="form-group">
+            <label class="required">Nome / Referencia</label>
+            <input type="text" id="nome" placeholder="Ex: Vestido Scena 18678">
+          </div>
+          <div class="form-group">
+            <label>Codigo / SKU</label>
+            <input type="text" id="codigo" placeholder="Ex: 18678">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="required">Tipo de Peca</label>
+          <div class="radio-group" id="tipoGroup">
+            <label><input type="radio" name="tipo" value="Sueter"><span>Sueter</span></label>
+            <label><input type="radio" name="tipo" value="Cardigan"><span>Cardigan</span></label>
+            <label><input type="radio" name="tipo" value="Blusa"><span>Blusa</span></label>
+            <label><input type="radio" name="tipo" value="Vestido"><span>Vestido</span></label>
+            <label><input type="radio" name="tipo" value="Maxipull"><span>Maxipull</span></label>
+            <label><input type="radio" name="tipo" value="Top"><span>Top</span></label>
+            <label><input type="radio" name="tipo" value="Colete"><span>Colete</span></label>
+            <label><input type="radio" name="tipo" value="Casaco"><span>Casaco</span></label>
+            <label><input type="radio" name="tipo" value="Regata"><span>Regata</span></label>
+            <label><input type="radio" name="tipo" value="Body"><span>Body</span></label>
+            <label><input type="radio" name="tipo" value="Saia"><span>Saia</span></label>
+            <label><input type="radio" name="tipo" value="Calca"><span>Calca</span></label>
+            <label><input type="radio" name="tipo" value="Capa"><span>Capa</span></label>
+            <label><input type="radio" name="tipo" value="Pelerine"><span>Pelerine</span></label>
+            <label><input type="radio" name="tipo" value="Polo"><span>Polo</span></label>
+            <label><input type="radio" name="tipo" value="Conjunto"><span>Conjunto</span></label>
+            <label><input type="radio" name="tipo" value="Acessorio"><span>Acessorio</span></label>
+            <label><input type="radio" name="tipo" value="Outro"><span>Outro</span></label>
+          </div>
+        </div>
+
+        <div class="form-group" id="tipoOutroGroup" style="display:none;">
+          <label>Especifique o tipo</label>
+          <input type="text" id="tipoOutro" placeholder="Ex: Poncho, Bolero, Macacao...">
+        </div>
+
+        <div class="two-cols">
+          <div class="form-group">
+            <label>Colecao</label>
+            <input type="text" id="colecao" placeholder="Ex: Maestra, Inverno 2026...">
+          </div>
+          <div class="form-group">
+            <label class="required">Cor Principal</label>
+            <input type="text" id="cor" placeholder="Ex: Off-white, Azul-marinho...">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Cores Secundarias / Detalhes de cor</label>
+          <input type="text" id="corSecundaria" placeholder="Ex: Detalhes em dourado, botoes pretos, listras em cru...">
+        </div>
+
+        <!-- FOTO DO PRODUTO -->
+        <div class="section-title">Foto do Produto <span class="badge">Recomendado</span></div>
+        <div class="form-group">
+          <div class="hint" style="margin-bottom:8px;">Foto de referencia que aparecera no slide do Google Slides. JPG ou PNG, max 5MB.</div>
+          <div class="photo-upload-area" id="photoUploadArea" onclick="document.getElementById('photoInput').click()">
+            <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" onchange="handlePhotoUpload(event)">
+            <div class="upload-icon">&#128247;</div>
+            <div class="upload-text">Clique ou arraste a foto aqui</div>
+            <div class="upload-hint">JPG, PNG ou WebP &mdash; max 5MB</div>
+          </div>
+        </div>
+
+        <!-- CONSTRUCAO E MATERIAIS -->
+        <div class="section-title">Construcao e Materiais</div>
+
+        <div class="form-group">
+          <label class="required">Composicao / Material</label>
+          <div class="hint">Informe os materiais e percentuais, se disponiveis</div>
+          <input type="text" id="composicao" placeholder="Ex: 70% Algodao, 30% Poliamida | ou: Fio Londres">
+        </div>
+
+        <div class="form-group">
+          <label class="required">Ponto / Textura de Trico</label>
+          <div class="radio-group" id="pontoGroup">
+            <label><input type="radio" name="ponto" value="Ponto perola"><span>Ponto perola</span></label>
+            <label><input type="radio" name="ponto" value="Trama canelada"><span>Trama canelada</span></label>
+            <label><input type="radio" name="ponto" value="Meia-malha"><span>Meia-malha</span></label>
+            <label><input type="radio" name="ponto" value="Ponto em links"><span>Ponto em links</span></label>
+            <label><input type="radio" name="ponto" value="Trico 3D"><span>Trico 3D</span></label>
+            <label><input type="radio" name="ponto" value="Jacquard"><span>Jacquard</span></label>
+            <label><input type="radio" name="ponto" value="Pointelle"><span>Pointelle</span></label>
+            <label><input type="radio" name="ponto" value="Nervura"><span>Nervura</span></label>
+            <label><input type="radio" name="ponto" value="Trancado"><span>Trancado</span></label>
+            <label><input type="radio" name="ponto" value="Liso"><span>Liso</span></label>
+            <label><input type="radio" name="ponto" value="Croche"><span>Croche</span></label>
+            <label><input type="radio" name="ponto" value="Ponto bolinha"><span>Ponto bolinha</span></label>
+            <label><input type="radio" name="ponto" value="Waffle"><span>Waffle</span></label>
+            <label><input type="radio" name="ponto" value="Outro"><span>Outro</span></label>
+          </div>
+        </div>
+
+        <div class="form-group" id="pontoOutroGroup" style="display:none;">
+          <label>Especifique o ponto/textura</label>
+          <input type="text" id="pontoOutro" placeholder="Ex: Ajour, Rendado, Piquet...">
+        </div>
+
+        <!-- DESIGN E MODELAGEM -->
+        <div class="section-title">Design e Modelagem</div>
+
+        <div class="two-cols">
+          <div class="form-group">
+            <label class="required">Gola ou Decote <span id="prepHint" class="prep-hint" style="display:none;"></span></label>
+            <select id="golaDecote" onchange="updatePrepHint()">
+              <option value="">Selecione...</option>
+              <optgroup label="GOLAS (preposicao DE)">
+                <option value="gola|Gola alta">Gola alta</option>
+                <option value="gola|Gola chamine">Gola chamine</option>
+                <option value="gola|Gola role">Gola role</option>
+                <option value="gola|Gola polo">Gola polo</option>
+                <option value="gola|Gola perkins">Gola perkins</option>
+                <option value="gola|Gola subida">Gola subida</option>
+                <option value="gola|Gola redonda">Gola redonda</option>
+                <option value="gola|Gola V">Gola V</option>
+              </optgroup>
+              <optgroup label="DECOTES (preposicao COM)">
+                <option value="decote|Decote redondo">Decote redondo</option>
+                <option value="decote|Decote careca">Decote careca</option>
+                <option value="decote|Decote em V">Decote em V</option>
+                <option value="decote|Decote quadrado">Decote quadrado</option>
+                <option value="decote|Decote ombro a ombro">Decote ombro a ombro</option>
+                <option value="decote|Decote canoa">Decote canoa</option>
+                <option value="decote|Decote halter">Decote halter</option>
+                <option value="decote|Decote bardot">Decote bardot</option>
+                <option value="decote|Decote cruzado">Decote cruzado</option>
+              </optgroup>
+              <optgroup label="OUTROS">
+                <option value="outro|Sem gola/decote definido">Sem gola/decote definido</option>
+                <option value="outro|Capuz">Capuz</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="required">Manga</label>
+            <select id="manga">
+              <option value="">Selecione...</option>
+              <option value="Manga longa">Manga longa</option>
+              <option value="Manga curta">Manga curta</option>
+              <option value="Manga ampla">Manga ampla</option>
+              <option value="Manga balloon">Manga balloon</option>
+              <option value="Manga bufante">Manga bufante</option>
+              <option value="Manga kimono">Manga kimono</option>
+              <option value="Manga morcego">Manga morcego</option>
+              <option value="Manga tres-quartos">Manga tres-quartos</option>
+              <option value="Manga raglan">Manga raglan</option>
+              <option value="Manga abalonada">Manga abalonada</option>
+              <option value="Manga franzida">Manga franzida</option>
+              <option value="Manga japonesa">Manga japonesa</option>
+              <option value="Manga caida">Manga caida</option>
+              <option value="Manga extra longa">Manga extra longa</option>
+              <option value="Sem manga">Sem manga</option>
+              <option value="Alcas">Alcas</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="two-cols">
+          <div class="form-group">
+            <label class="required">Modelagem / Caimento</label>
+            <select id="modelagem">
+              <option value="">Selecione...</option>
+              <option value="Ajustada">Ajustada (Slim fit)</option>
+              <option value="Regular">Regular</option>
+              <option value="Ampla">Ampla (Relaxed)</option>
+              <option value="Oversized">Oversized</option>
+              <option value="Evase">Evase</option>
+              <option value="Reta">Reta</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Comprimento</label>
+            <select id="comprimento">
+              <option value="">Selecione (se aplicavel)...</option>
+              <option value="Cropped">Cropped</option>
+              <option value="Curto">Curto</option>
+              <option value="Medio">Medio</option>
+              <option value="Midi">Midi</option>
+              <option value="Longo">Longo</option>
+              <option value="Maxi">Maxi</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Fechamento</label>
+          <div class="radio-group">
+            <label><input type="radio" name="fecho" value="Sem fecho"><span>Sem fecho</span></label>
+            <label><input type="radio" name="fecho" value="Botoes"><span>Botoes</span></label>
+            <label><input type="radio" name="fecho" value="Ziper"><span>Ziper</span></label>
+            <label><input type="radio" name="fecho" value="Laco"><span>Laco</span></label>
+            <label><input type="radio" name="fecho" value="Amarracao"><span>Amarracao</span></label>
+            <label><input type="radio" name="fecho" value="Transpasse"><span>Transpasse</span></label>
+            <label><input type="radio" name="fecho" value="Fivela"><span>Fivela</span></label>
+          </div>
+        </div>
+
+        <!-- DETALHES -->
+        <div class="section-title">Detalhes e Acabamentos</div>
+
+        <div class="form-group">
+          <label>Detalhes Construtivos</label>
+          <div class="hint">Selecione todos os que se aplicam</div>
+          <div class="checkbox-group" id="detalhesGroup">
+            <label><input type="checkbox" value="Franjas na barra"><span>Franjas na barra</span></label>
+            <label><input type="checkbox" value="Fake fur"><span>Fake fur</span></label>
+            <label><input type="checkbox" value="Capuz"><span>Capuz</span></label>
+            <label><input type="checkbox" value="Bolsos frontais"><span>Bolsos frontais</span></label>
+            <label><input type="checkbox" value="Bolsos embutidos"><span>Bolsos embutidos</span></label>
+            <label><input type="checkbox" value="Punhos"><span>Punhos</span></label>
+            <label><input type="checkbox" value="Cos elastico"><span>Cos elastico</span></label>
+            <label><input type="checkbox" value="Pregas laterais"><span>Pregas laterais</span></label>
+            <label><input type="checkbox" value="Cava reta"><span>Cava reta</span></label>
+            <label><input type="checkbox" value="Folhos"><span>Folhos</span></label>
+            <label><input type="checkbox" value="Ombros caidos"><span>Ombros caidos</span></label>
+            <label><input type="checkbox" value="Fenda lateral"><span>Fenda lateral</span></label>
+            <label><input type="checkbox" value="Barra assimetrica"><span>Barra assimetrica</span></label>
+            <label><input type="checkbox" value="Gola avulsa"><span>Gola avulsa</span></label>
+            <label><input type="checkbox" value="Cut-out"><span>Cut-out</span></label>
+            <label><input type="checkbox" value="Cordao"><span>Cordao</span></label>
+            <label><input type="checkbox" value="Apliques"><span>Apliques</span></label>
+            <label><input type="checkbox" value="Barra ribana"><span>Barra ribana</span></label>
+            <label><input type="checkbox" value="Sem costura"><span>Sem costura</span></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Outros Detalhes (texto livre)</label>
+          <textarea id="detalhesLivre" rows="2" placeholder="Descreva qualquer detalhe adicional que nao esteja nas opcoes acima..."></textarea>
+        </div>
+
+        <!-- CONTEXTO -->
+        <div class="section-title">Contexto Extra <span class="badge">Opcional</span></div>
+
+        <div class="two-cols">
+          <div class="form-group">
+            <label>Instrucoes de Cuidado</label>
+            <input type="text" id="cuidado" placeholder="Ex: Lavagem a mao, Lavar a seco...">
+          </div>
+          <div class="form-group">
+            <label>Preco</label>
+            <input type="text" id="preco" placeholder="Ex: R$ 389,90">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Observacoes / Contexto Adicional</label>
+          <textarea id="observacoes" rows="3" placeholder="Publico-alvo especial, uso pretendido, destaque de campanha, referencia de foto..."></textarea>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="btn-row">
+          <button type="button" class="btn btn-add" onclick="addToBatch()" style="margin-right:auto;">+ Adicionar ao Lote</button>
+          <button type="button" class="btn btn-secondary" onclick="clearForm()">Limpar</button>
+          <button type="button" class="btn btn-primary" onclick="generateBriefing()">Gerar Prompt</button>
+          <button type="button" class="btn btn-slides" id="btnSendSlide" onclick="sendToSlides()" title="Enviar para Google Slides">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Enviar ao Slides
+          </button>
+        </div>
+
+      </form>
+
+      <div id="singleStatus" class="status-banner"></div>
+      <div id="output" class="output-area">
+        <button class="copy-btn-inline" onclick="copyOutput()">Copiar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BATCH TAB ===== -->
+  <div id="tab-batch" class="tab-content">
+    <div class="form-card">
+      <div class="section-title" style="margin-top:0;">Modo Lote &mdash; Multiplos Produtos</div>
+      <p style="margin-bottom:20px; color:var(--text-muted); font-size:12px; line-height:1.7;">Preencha cada produto na aba "Produto Individual" e clique em "+ Adicionar ao Lote". Quando tiver todos, gere o briefing consolidado aqui.</p>
+
+      <div class="form-group">
+        <label class="required">Modo de Descricao (para todo o lote)</label>
+        <div class="radio-group">
+          <label><input type="radio" name="modoBatch" value="Editorial (COS)"><span>Editorial (COS)</span></label>
+          <label><input type="radio" name="modoBatch" value="Tecnico (Zara)"><span>Tecnico (Zara)</span></label>
+          <label><input type="radio" name="modoBatch" value="Completo (SEO + Editorial)"><span>Completo (SEO + Editorial)</span></label>
+          <label><input type="radio" name="modoBatch" value="Tecnico + SEO"><span>Tecnico + SEO</span></label>
+          <label><input type="radio" name="modoBatch" value="Multi-Marca"><span>Multi-Marca</span></label>
+          <label><input type="radio" name="modoBatch" value="Estilo Especifico"><span>Estilo Especifico</span></label>
+        </div>
+      </div>
+
+      <div class="two-cols">
+        <div class="form-group">
+          <label>Colecao (para todo o lote)</label>
+          <input type="text" id="colecaoBatch" placeholder="Ex: Maestra, Inverno 2026...">
+        </div>
+        <div class="form-group">
+          <label>Marca (se Estilo Especifico)</label>
+          <select id="estiloMarcaBatch">
+            <option value="">Selecione (se aplicavel)...</option>
+            <option value="COS">COS</option>
+            <option value="Zara">Zara</option>
+            <option value="Massimo Dutti">Massimo Dutti</option>
+            <option value="Arket">Arket</option>
+            <option value="H&M">H&amp;M</option>
+            <option value="Aritzia">Aritzia</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="produtos-list" id="produtosList">
+        <p style="color:var(--text-muted); text-align:center; padding:24px; font-size:12px; letter-spacing:0.5px;">Nenhum produto adicionado ainda.</p>
+      </div>
+
+      <div id="batchCount"></div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" onclick="clearBatch()">Limpar Lote</button>
+        <button type="button" class="btn btn-primary" onclick="generateBatchBriefing()">Gerar Briefing do Lote</button>
+        <button type="button" class="btn btn-slides" id="btnSendBatchSlides" onclick="sendBatchToSlides()" title="Enviar lote para Google Slides">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Enviar ao Slides
+        </button>
+      </div>
+
+      <div id="batchStatus" class="status-banner"></div>
+      <div id="batchOutput" class="output-area">
+        <button class="copy-btn-inline" onclick="copyBatchOutput()">Copiar</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <svg viewBox="0 0 841.89 136.1" xmlns="http://www.w3.org/2000/svg" style="height:20px;fill:#D4C9BD;"><path d="M113.72,107.53h-54.11l-6.43,17.9h-31.82L65.08,10.66h43.17l43.72,114.77h-31.84l-6.41-17.9ZM105.51,84.44l-15.98-44.8h-5.61l-16.12,44.8h37.7Z"/><path d="M163.55,10.66h35.66l48.23,72.15h2.73V10.66h30.06v114.77h-34.84l-48.92-72.15h-2.86v72.15h-30.06V10.66Z"/><path d="M293.98,88.95h27.88c.69,9.7,8.88,15.99,26.92,15.99,16.67.14,25.27-5.19,25.27-12.98,0-6.56-4.92-10.53-17.76-12.57l-14.35-2.47c-21.86-3.69-44.94-8.47-44.94-34.84,0-22,18.43-35.25,51.92-35.25,31.02,0,52.46,9.98,52.46,39.9h-27.6c-1.63-9.43-9.16-15.71-25.41-15.71-14.62,0-21.72,4.91-21.72,12.43,0,5.87,4.37,10.1,15.02,11.88l12.44,2.19c22.13,3.96,50.55,6.69,50.55,35.37,0,23.64-19,36.48-55.88,36.35-36.62,0-55.21-12.43-54.79-40.31Z"/><path d="M418,10.66h98.91v25.01h-68.03v21.59h65.58v21.45h-65.58v21.72h68.03v25h-98.91V10.66Z"/><path d="M532.59,10.66h30.88v88.95h64.48v25.82h-95.36V10.66Z"/><path d="M642.95,10.66h39.21l25.14,75.42h2.33l25.14-75.42h39.21v114.77h-29.51v-62.99h-2.6l-21.59,62.99h-23.64l-21.59-62.99h-2.59v62.99h-29.51V10.66Z"/><path d="M789.65,10.66h30.88v114.77h-30.88V10.66Z"/></svg>
+  <p>Ferramenta interna &mdash; Briefing para descricoes de e-commerce</p>
+</div>
+
+<div id="toast" class="copy-toast">Copiado para a area de transferencia</div>
+
+<script>
+  const batchProducts = [];
+
+  // Tab switching
+  function switchTab(tab) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.querySelector(`.nav-tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+  }
+
+  // Modo selection
+  function selectModo(event) {
+    const card = event.currentTarget;
+    const radio = card.querySelector('input[type="radio"]');
+    if (!radio) return;
+    radio.checked = true;
+    document.querySelectorAll('.modo-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    const val = radio.value;
+
+    // Mostrar/esconder opcoes de marca
+    const brandOpts = document.getElementById('brandOptions');
+    const estiloOpts = document.getElementById('estiloOptions');
+    if (val === 'Multi-Marca') {
+      brandOpts.classList.add('visible');
+      estiloOpts.classList.remove('visible');
+    } else if (val === 'Estilo Especifico') {
+      estiloOpts.classList.add('visible');
+      brandOpts.classList.remove('visible');
+    } else {
+      brandOpts.classList.remove('visible');
+      estiloOpts.classList.remove('visible');
+    }
+  }
+
+  // Brand chip toggle
+  function toggleBrand(chip) {
+    const cb = chip.querySelector('input');
+    setTimeout(() => { chip.classList.toggle('selected', cb.checked); }, 10);
+  }
+
+  // Show/hide "Outro" fields
+  document.querySelectorAll('input[name="tipo"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('tipoOutroGroup').style.display = r.value === 'Outro' ? 'block' : 'none';
+    });
+  });
+  document.querySelectorAll('input[name="ponto"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('pontoOutroGroup').style.display = r.value === 'Outro' ? 'block' : 'none';
+    });
+  });
+
+  // Preposition hint
+  function updatePrepHint() {
+    const val = document.getElementById('golaDecote').value;
+    const hint = document.getElementById('prepHint');
+    if (!val) { hint.style.display = 'none'; return; }
+    const tipo = val.split('|')[0];
+    if (tipo === 'gola') {
+      hint.textContent = 'usar DE';
+      hint.className = 'prep-hint de';
+      hint.style.display = 'inline-block';
+    } else if (tipo === 'decote') {
+      hint.textContent = 'usar COM';
+      hint.className = 'prep-hint com';
+      hint.style.display = 'inline-block';
+    } else {
+      hint.style.display = 'none';
+    }
+  }
+
+  // Get form data
+  function getFormData() {
+    const tipoRadio = document.querySelector('input[name="tipo"]:checked');
+    let tipo = tipoRadio ? tipoRadio.value : '';
+    if (tipo === 'Outro') tipo = document.getElementById('tipoOutro').value || 'Outro';
+
+    const pontoRadio = document.querySelector('input[name="ponto"]:checked');
+    let ponto = pontoRadio ? pontoRadio.value : '';
+    if (ponto === 'Outro') ponto = document.getElementById('pontoOutro').value || 'Outro';
+
+    const fechoRadio = document.querySelector('input[name="fecho"]:checked');
+    const fecho = fechoRadio ? fechoRadio.value : '';
+
+    const modoRadio = document.querySelector('input[name="modo"]:checked');
+    const modo = modoRadio ? modoRadio.value : '';
+
+    const golaDecoteVal = document.getElementById('golaDecote').value;
+    let golaDecote = '', golaDecoteTipo = '';
+    if (golaDecoteVal) {
+      const parts = golaDecoteVal.split('|');
+      golaDecoteTipo = parts[0];
+      golaDecote = parts[1];
+    }
+
+    const detalhes = [];
+    document.querySelectorAll('#detalhesGroup input:checked').forEach(cb => detalhes.push(cb.value));
+
+    const selectedBrands = [];
+    document.querySelectorAll('#brandChips input:checked').forEach(cb => selectedBrands.push(cb.value));
+
+    return {
+      nome: document.getElementById('nome').value,
+      codigo: document.getElementById('codigo').value,
+      tipo, colecao: document.getElementById('colecao').value,
+      composicao: document.getElementById('composicao').value,
+      ponto, golaDecote, golaDecoteTipo,
+      manga: document.getElementById('manga').value,
+      modelagem: document.getElementById('modelagem').value,
+      comprimento: document.getElementById('comprimento').value,
+      fecho, detalhes,
+      detalhesLivre: document.getElementById('detalhesLivre').value,
+      cor: document.getElementById('cor').value,
+      corSecundaria: document.getElementById('corSecundaria').value,
+      cuidado: document.getElementById('cuidado').value,
+      preco: document.getElementById('preco').value,
+      modo, selectedBrands,
+      estiloMarca: document.getElementById('estiloMarca').value,
+      observacoes: document.getElementById('observacoes').value,
+      fotoBase64: currentPhotoBase64 || null,
+      fotoNome: currentPhotoName || null,
+    };
+  }
+
+  // Format product briefing
+  function formatProductBriefing(data, index) {
+    let prefix = index !== undefined ? `\n══════ PRODUTO ${index + 1} ══════\n` : '';
+    let lines = [prefix];
+    lines.push(`NOME/REFERENCIA: ${data.nome || '\u2014'}`);
+    if (data.codigo) lines.push(`CODIGO/SKU: ${data.codigo}`);
+    lines.push(`TIPO DE PECA: ${data.tipo || '\u2014'}`);
+    if (data.colecao) lines.push(`COLECAO: ${data.colecao}`);
+    if (data.preco) lines.push(`PRECO: ${data.preco}`);
+    lines.push('');
+    lines.push(`COMPOSICAO: ${data.composicao || '\u2014'}`);
+    lines.push(`PONTO/TEXTURA: ${data.ponto || '\u2014'}`);
+    lines.push('');
+    let golaStr = data.golaDecote || '\u2014';
+    if (data.golaDecoteTipo === 'gola') golaStr += '  \u2192  usar preposicao DE';
+    else if (data.golaDecoteTipo === 'decote') golaStr += '  \u2192  usar preposicao COM';
+    lines.push(`GOLA/DECOTE: ${golaStr}`);
+    lines.push(`MANGA: ${data.manga || '\u2014'}`);
+    lines.push(`MODELAGEM: ${data.modelagem || '\u2014'}`);
+    if (data.comprimento) lines.push(`COMPRIMENTO: ${data.comprimento}`);
+    if (data.fecho && data.fecho !== 'Sem fecho') lines.push(`FECHAMENTO: ${data.fecho}`);
+    lines.push('');
+    lines.push(`COR PRINCIPAL: ${data.cor || '\u2014'}`);
+    if (data.corSecundaria) lines.push(`CORES SECUNDARIAS: ${data.corSecundaria}`);
+    lines.push('');
+    if (data.detalhes.length > 0) lines.push(`DETALHES: ${data.detalhes.join(', ')}`);
+    if (data.detalhesLivre) lines.push(`DETALHES EXTRAS: ${data.detalhesLivre}`);
+    if (data.cuidado) lines.push(`CUIDADOS: ${data.cuidado}`);
+    if (data.observacoes) lines.push(`OBSERVACOES: ${data.observacoes}`);
+    return lines.join('\n');
+  }
+
+  // Modo instruction
+  function getModoInstruction(modo, data) {
+    switch(modo) {
+      case 'Editorial (COS)':
+        return 'MODO: Editorial (COS)\nEscreva: paragrafo editorial (3-5 frases, 60-120 palavras) + linha tecnica + bullets de specs.\nUse tom contido e confiante. Varie o gancho. Siga a formula de material "tricotado(a) em X de toque Y".';
+      case 'Tecnico (Zara)':
+        return 'MODO: Tecnico (Zara)\nEscreva: descricao curta e objetiva (~80 chars) + bullets de specs.\nSem emocao, sem adjetivos subjetivos. Descreva exatamente o que a peca E.';
+      case 'Completo (SEO + Editorial)':
+        return 'MODO: Completo (SEO + Editorial)\nEntregue os 7 campos SEO:\n1. Titulo SEO (max 60 chars): [Tipo] [Diferencial] [Material] \u2014 Anselmi\n2. Meta Description (120-155 chars)\n3. Descricao Curta (40-80 chars)\n4. Descricao Completa (paragrafo editorial COS + linha tecnica + bullets)\n5. Tags (8-12, sem acento, minusculas)\n6. Alt Text (80-125 chars)\n7. URL Amigavel (/tipo-material-diferencial)';
+      case 'Tecnico + SEO':
+        return 'MODO: Tecnico + SEO\nEntregue os 7 campos SEO:\n1. Titulo SEO (max 60 chars)\n2. Meta Description (120-155 chars)\n3. Descricao Curta (40-80 chars)\n4. Descricao Completa (formato tecnico Zara \u2014 curto e objetivo)\n5. Tags (8-12, sem acento, minusculas)\n6. Alt Text (80-125 chars)\n7. URL Amigavel';
+      case 'Multi-Marca':
+        const brands = data.selectedBrands && data.selectedBrands.length > 0 ? data.selectedBrands.join(', ') : 'COS, Massimo Dutti, Arket, H&M, Aritzia';
+        return `MODO: Multi-Marca\nEscreva a mesma peca nos estilos: ${brands}\nCada marca tem tom, idioma e estrutura proprios. Consulte references/estilos-5-marcas.md.\nIdiomas: COS=Espanhol, Massimo Dutti/Arket/Aritzia=Ingles, H&M=Portugues BR.`;
+      case 'Estilo Especifico':
+        const marca = data.estiloMarca || '(nao selecionada)';
+        return `MODO: Estilo Especifico\nEscreva no estilo: ${marca}\nConsulte references/estilos-5-marcas.md para tom, estrutura e vocabulario desta marca.`;
+      default:
+        return 'MODO: (nao selecionado)';
+    }
+  }
+
+  // Generate briefing
+  function generateBriefing() {
+    const data = getFormData();
+    let output = '\u2550'.repeat(56) + '\n';
+    output += '  BRIEFING DE PRODUTO \u2014 ANSELMI\n';
+    output += '\u2550'.repeat(56) + '\n\n';
+    output += getModoInstruction(data.modo, data);
+    output += '\n\n' + '\u2500'.repeat(56) + '\n';
+    output += formatProductBriefing(data);
+    output += '\n\n' + '\u2550'.repeat(56) + '\n';
+    output += 'INSTRUCAO: Use a skill anselmi-descricoes para gerar\n';
+    output += 'a descricao com base neste briefing.\n';
+    output += '\u2550'.repeat(56);
+
+    const el = document.getElementById('output');
+    el.innerHTML = `<button class="copy-btn-inline" onclick="copyOutput()">Copiar</button>`;
+    const pre = document.createElement('span');
+    pre.textContent = output;
+    el.appendChild(pre);
+    el.classList.add('visible');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Batch functions
+  function addToBatch() {
+    const data = getFormData();
+    if (!data.nome && !data.tipo) { alert('Preencha pelo menos o nome e tipo da peca.'); return; }
+    batchProducts.push(data);
+    renderBatchList();
+    clearForm();
+    switchTab('batch');
+    showToast('Produto adicionado ao lote');
+  }
+
+  function renderBatchList() {
+    const el = document.getElementById('produtosList');
+    const countEl = document.getElementById('batchCount');
+    if (batchProducts.length === 0) {
+      el.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding:24px; font-size:12px;">Nenhum produto adicionado ainda.</p>';
+      countEl.style.display = 'none';
+      return;
+    }
+    countEl.style.display = 'block';
+    countEl.textContent = `${batchProducts.length} produto${batchProducts.length > 1 ? 's' : ''} no lote`;
+    el.innerHTML = batchProducts.map((p, i) => `
+      <div class="produto-item">
+        <div class="info"><strong>#${i + 1}</strong> \u2014 ${p.tipo || '?'} ${p.nome || ''} <span style="color:var(--text-muted)">(${p.cor || 'sem cor'} | ${p.ponto || 'sem ponto'})</span></div>
+        <button class="remove" onclick="removeBatchItem(${i})" title="Remover">&times;</button>
+      </div>
+    `).join('');
+  }
+
+  function removeBatchItem(i) { batchProducts.splice(i, 1); renderBatchList(); }
+
+  function clearBatch() {
+    batchProducts.length = 0;
+    renderBatchList();
+    document.getElementById('batchOutput').classList.remove('visible');
+  }
+
+  function generateBatchBriefing() {
+    if (batchProducts.length === 0) { alert('Adicione pelo menos um produto ao lote.'); return; }
+    const modoBatchRadio = document.querySelector('input[name="modoBatch"]:checked');
+    const modoBatch = modoBatchRadio ? modoBatchRadio.value : '(nao selecionado)';
+    const colecaoBatch = document.getElementById('colecaoBatch').value;
+    const estiloMarcaBatch = document.getElementById('estiloMarcaBatch').value;
+    const fakeData = { selectedBrands: ['COS', 'Massimo Dutti', 'Arket', 'H&M', 'Aritzia'], estiloMarca: estiloMarcaBatch };
+
+    let output = '\u2550'.repeat(56) + '\n';
+    output += `  BRIEFING DE LOTE \u2014 ANSELMI\n  ${batchProducts.length} PRODUTOS\n`;
+    output += '\u2550'.repeat(56) + '\n\n';
+    output += getModoInstruction(modoBatch, fakeData);
+    if (colecaoBatch) output += `\nCOLECAO DO LOTE: ${colecaoBatch}`;
+    output += '\n\nIMPORTANTE: Variar os padroes de abertura entre os produtos.';
+    output += '\nUse pelo menos 4 padroes diferentes de gancho.\n';
+    output += '\u2500'.repeat(56) + '\n';
+    batchProducts.forEach((p, i) => { output += formatProductBriefing(p, i) + '\n'; });
+    output += '\n' + '\u2550'.repeat(56) + '\n';
+    output += 'INSTRUCAO: Use a skill anselmi-descricoes para gerar\n';
+    output += 'as descricoes com base neste briefing.\n';
+    output += '\u2550'.repeat(56);
+
+    const el = document.getElementById('batchOutput');
+    el.innerHTML = `<button class="copy-btn-inline" onclick="copyBatchOutput()">Copiar</button>`;
+    const pre = document.createElement('span');
+    pre.textContent = output;
+    el.appendChild(pre);
+    el.classList.add('visible');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Utility
+  function clearForm() {
+    document.getElementById('singleForm').reset();
+    document.getElementById('tipoOutroGroup').style.display = 'none';
+    document.getElementById('pontoOutroGroup').style.display = 'none';
+    document.getElementById('brandOptions').classList.remove('visible');
+    document.getElementById('estiloOptions').classList.remove('visible');
+    document.getElementById('prepHint').style.display = 'none';
+    document.getElementById('output').classList.remove('visible');
+    document.querySelectorAll('.modo-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('#brandChips .brand-chip').forEach(chip => {
+      chip.classList.add('selected');
+      chip.querySelector('input').checked = true;
+    });
+    removePhoto();
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg || 'Copiado para a area de transferencia';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  function copyOutput() {
+    const el = document.getElementById('output');
+    if (!el.classList.contains('visible')) generateBriefing();
+    const text = el.querySelector('span') ? el.querySelector('span').textContent : el.textContent;
+    navigator.clipboard.writeText(text).then(() => showToast());
+  }
+
+  function copyBatchOutput() {
+    const el = document.getElementById('batchOutput');
+    if (!el.classList.contains('visible')) return;
+    const text = el.querySelector('span') ? el.querySelector('span').textContent : el.textContent;
+    navigator.clipboard.writeText(text).then(() => showToast());
+  }
+
+  // ===== GOOGLE SLIDES INTEGRATION =====
+
+  const CONFIG_KEY = 'anselmi_briefing_config';
+
+  function getAppsScriptUrl() {
+    return document.getElementById('appsScriptUrl').value.trim();
+  }
+
+  function saveConfig() {
+    const url = getAppsScriptUrl();
+    try { localStorage.setItem(CONFIG_KEY, JSON.stringify({ url })); } catch(e) {}
+    updateConfigStatus(url);
+  }
+
+  function loadConfig() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
+      if (saved.url) {
+        document.getElementById('appsScriptUrl').value = saved.url;
+        updateConfigStatus(saved.url);
+      }
+    } catch(e) {}
+  }
+
+  function updateConfigStatus(url) {
+    const status = document.getElementById('configStatus');
+    if (url && url.startsWith('https://script.google.com')) {
+      status.className = 'status-banner success visible';
+      status.textContent = 'URL configurada. O botao "Enviar ao Slides" esta ativo.';
+    } else if (url) {
+      status.className = 'status-banner error visible';
+      status.textContent = 'URL invalida. Deve comecar com https://script.google.com';
+    } else {
+      status.className = 'status-banner info';
+      status.style.display = 'flex';
+      status.textContent = 'Sem URL configurada. O botao "Enviar ao Slides" ficara desativado.';
+    }
+  }
+
+  function toggleConfig() {
+    const panel = document.getElementById('configPanel');
+    panel.classList.toggle('visible');
+  }
+
+  function showStatus(elementId, type, message) {
+    const el = document.getElementById(elementId);
+    el.className = `status-banner ${type} visible`;
+    el.textContent = message;
+    if (type === 'success') {
+      setTimeout(() => { el.className = 'status-banner'; }, 5000);
+    }
+  }
+
+  async function sendToSlides() {
+    const url = getAppsScriptUrl();
+    if (!url || !url.startsWith('https://script.google.com')) {
+      toggleConfig();
+      showToast('Configure a URL do Apps Script primeiro');
+      return;
+    }
+
+    const data = getFormData();
+    if (!data.nome && !data.tipo) {
+      alert('Preencha pelo menos o nome e tipo da peca.');
+      return;
+    }
+
+    const btn = document.getElementById('btnSendSlide');
+    btn.classList.add('sending');
+    btn.textContent = 'Enviando...';
+    showStatus('singleStatus', 'info', 'Enviando dados para Google Slides...');
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(data),
+      });
+
+      // no-cors = opaque response, assume success
+      showStatus('singleStatus', 'success', 'Briefing enviado ao Google Slides com sucesso!');
+      showToast('Slide criado no Google Slides');
+    } catch (error) {
+      showStatus('singleStatus', 'error', 'Erro ao enviar: ' + error.message);
+    } finally {
+      btn.classList.remove('sending');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg> Enviar ao Slides';
+    }
+  }
+
+  async function sendBatchToSlides() {
+    const url = getAppsScriptUrl();
+    if (!url || !url.startsWith('https://script.google.com')) {
+      toggleConfig();
+      showToast('Configure a URL do Apps Script primeiro');
+      return;
+    }
+
+    if (batchProducts.length === 0) {
+      alert('Adicione pelo menos um produto ao lote.');
+      return;
+    }
+
+    const modoBatchRadio = document.querySelector('input[name="modoBatch"]:checked');
+    const modo = modoBatchRadio ? modoBatchRadio.value : 'Editorial (COS)';
+
+    const btn = document.getElementById('btnSendBatchSlides');
+    btn.classList.add('sending');
+    btn.textContent = 'Enviando...';
+    showStatus('batchStatus', 'info', `Enviando ${batchProducts.length} produtos para Google Slides...`);
+
+    try {
+      const payload = {
+        batch: true,
+        modo: modo,
+        products: batchProducts,
+      };
+
+      await fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload),
+      });
+
+      showStatus('batchStatus', 'success', `${batchProducts.length} slides criados no Google Slides!`);
+      showToast(`${batchProducts.length} slides criados`);
+    } catch (error) {
+      showStatus('batchStatus', 'error', 'Erro ao enviar: ' + error.message);
+    } finally {
+      btn.classList.remove('sending');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg> Enviar ao Slides';
+    }
+  }
+
+  // ===== PHOTO UPLOAD =====
+  let currentPhotoBase64 = null;
+  let currentPhotoName = null;
+
+  function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('A foto deve ter no maximo 5MB.');
+      event.target.value = '';
+      return;
+    }
+
+    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
+      alert('Formato invalido. Use JPG, PNG ou WebP.');
+      event.target.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      currentPhotoBase64 = e.target.result; // data:image/...;base64,...
+      currentPhotoName = file.name;
+      showPhotoPreview(e.target.result, file.name);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function showPhotoPreview(dataUrl, fileName) {
+    const area = document.getElementById('photoUploadArea');
+    area.classList.add('has-image');
+    area.innerHTML = `
+      <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" onchange="handlePhotoUpload(event)">
+      <button type="button" class="photo-remove" onclick="event.stopPropagation(); removePhoto();">&times;</button>
+      <img src="${dataUrl}" class="photo-preview" alt="Preview">
+      <div class="photo-name">${fileName}</div>
+    `;
+  }
+
+  function removePhoto() {
+    currentPhotoBase64 = null;
+    currentPhotoName = null;
+    const area = document.getElementById('photoUploadArea');
+    area.classList.remove('has-image');
+    area.innerHTML = `
+      <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" onchange="handlePhotoUpload(event)">
+      <div class="upload-icon">&#128247;</div>
+      <div class="upload-text">Clique ou arraste a foto aqui</div>
+      <div class="upload-hint">JPG, PNG ou WebP &mdash; max 5MB</div>
+    `;
+  }
+
+  // Drag & drop support
+  const dropArea = document.getElementById('photoUploadArea');
+  ['dragenter', 'dragover'].forEach(evt => {
+    dropArea.addEventListener(evt, e => { e.preventDefault(); dropArea.style.borderColor = 'var(--black)'; });
+  });
+  ['dragleave', 'drop'].forEach(evt => {
+    dropArea.addEventListener(evt, e => { e.preventDefault(); dropArea.style.borderColor = ''; });
+  });
+  dropArea.addEventListener('drop', e => {
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const input = document.getElementById('photoInput');
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      input.files = dt.files;
+      handlePhotoUpload({ target: input });
+    }
+  });
+
+  // Load config on page load
+  loadConfig();
+</script>
+
+</body>
+</html>
+
