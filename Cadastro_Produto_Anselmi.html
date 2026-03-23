@@ -45,39 +45,574 @@
   }
   .section-title:first-child { margin-top: 0; }
   .section-title .badge {
-    font-size: 9px; background: var(--black); color: var(--white); padding: 3px 10px;
-    border-radius: 0; font-weight: 500; letter-spacing: 1.5px;
+    background: var(--red); color: var(--white); border-radius: 50%; width: 16px; height: 16px;
+    display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; flex-shrink: 0;
   }
 
-  .form-group { margin-bottom: 20px; }
-  .form-group > label {
-    display: block; font-weight: 500; font-size: 11px; color: var(--text-light);
-    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1.5px;
-  }
-  .form-group .hint { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: 400; }
-  input[type="text"], textarea, select {
-    width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 0;
-    font-size: 13px; font-family: inherit; transition: border 0.3s; background: var(--white); color: var(--text);
-  }
-  input::placeholder, textarea::placeholder { color: var(--beige-dark); }
-  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--black); }
-  textarea { resize: vertical; min-height: 70px; }
-  select { cursor: pointer; background: var(--white); -webkit-appearance: none; appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23231F20' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat; background-position: right 14px center;
+  input, textarea, select { font-family: 'Montserrat', sans-serif; }
+
+  /* ===== ROW LAYOUTS ===== */
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+  .form-row.full { grid-template-columns: 1fr; }
+  .form-row.three-col { grid-template-columns: 1fr 1fr 1fr; }
+  .form-row.two-thirds { grid-template-columns: 2fr 1fr; }
+  .form-row.label-right { grid-template-columns: auto 1fr; gap: 16px; align-items: start; }
+  .form-row.group-row { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+
+  @media (max-width: 768px) {
+    .form-row, .form-row.three-col, .form-row.two-thirds {
+      grid-template-columns: 1fr;
+    }
   }
 
-  /* Radio & Checkbox pills */
-  .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-  .radio-group label, .checkbox-group label {
-    display: flex; align-items: center; gap: 6px; padding: 8px 16px;
-    border: 1px solid var(--border); border-radius: 0; cursor: pointer;
-    font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0.3px;
-    transition: all 0.2s; background: var(--white); color: var(--text-light);
+  /* ===== FORM FIELDS ===== */
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text); }
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"],
+  .form-group input[type="number"],
+  .form-group input[type="date"],
+  .form-group select,
+  .form-group textarea {
+    padding: 12px 14px; border: 1px solid var(--border); border-radius: 2px; font-size: 13px;
+    color: var(--text); background: var(--white); transition: border-color 0.2s;
   }
-  .radio-group label:hover, .checkbox-group label:hover { border-color: var(--black); color: var(--text); }
-  .radio-group input, .checkbox-group input { display: none; }
-  .radio-group label:has(input:checked), .checkbox-group label:has(input:checked) {
+  .form-group input[type="text"]:focus,
+  .form-group input[type="email"]:focus,
+  .form-group input[type="password"]:focus,
+  .form-group input[type="number"]:focus,
+  .form-group input[type="date"]:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none; border-color: var(--text); box-shadow: 0 0 0 3px rgba(35,31,32,0.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23231F20' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+
+  /* ===== INLINE FIELD LAYOUTS ===== */
+  .inline-fields { display: flex; gap: 16px; align-items: flex-start; }
+  .inline-fields .form-group { flex: 1; }
+
+  /* ===== CHECKBOX & RADIO ===== */
+  .checkbox-group, .radio-group { display: flex; flex-direction: column; gap: 10px; }
+  .checkbox-item, .radio-item {
+    display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--text);
+  }
+  .checkbox-item input[type="checkbox"],
+  .radio-item input[type="radio"] {
+    cursor: pointer; accent-color: var(--text); width: 16px; height: 16px; flex-shrink: 0;
+  }
+  .checkbox-item label, .radio-item label { cursor: pointer; flex: 1; }
+
+  /* ===== BUTTONS ===== */
+  .button-group { display: flex; gap: 16px; margin-top: 40px; }
+  button, .btn { padding: 12px 32px; border: none; border-radius: 2px; cursor: pointer; font-size: 11px;
+    font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--black); color: var(--white); }
+  .btn-primary:hover { background: var(--text); }
+  .btn-secondary { background: var(--beige); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: var(--border); }
+  .btn-success { background: var(--green); color: var(--white); }
+  .btn-success:hover { opacity: 0.9; }
+  .btn-danger { background: var(--red); color: var(--white); }
+  .btn-danger:hover { opacity: 0.9; }
+
+  /* ===== TABBED INTERFACE ===== */
+  .tab-container { margin-top: 24px; }
+  .tab-buttons { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  .tab-button {
+    padding: 12px 16px; background: transparent; border: none; border-bottom: 2px solid transparent;
+    font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--text-light); transition: all 0.2s;
+  }
+  .tab-button.active { color: var(--text); border-bottom-color: var(--text); }
+  .tab-button:hover { color: var(--text); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ===== ALERT ===== */
+  .alert { padding: 16px; border-radius: 2px; margin-bottom: 24px; font-size: 13px; display: flex; gap: 12px; align-items: flex-start; }
+  .alert-icon { flex-shrink: 0; font-weight: 700; }
+  .alert-info { background: var(--blue-hint); color: var(--text); }
+  .alert-warning { background: #FFF3CD; color: #856404; }
+  .alert-error { background: #F8D7DA; color: #721C24; }
+  .alert-success { background: #D4EDDA; color: #155724; }
+
+  /* ===== REQUIRED FIELD INDICATOR ===== */
+  .required { color: var(--red); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .container { margin: 20px auto; padding: 0 16px; }
+    .form-card { padding: 24px; }
+    .button-group { flex-direction: column; }
+    button, .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  “A qualidade nunca sai de moda” — Anselmi Uniformes
+</div>
+
+<header class="header">
+  <div style="font-size: 28px; font-weight: 700; letter-spacing: -1px;">Anselmi</div>
+  <div class="subtitle">Cadastro de Produto</div>
+</header>
+
+<div class="container">
+  <div class="form-card">
+    <div class="tab-container">
+      <!-- TAB 1: BASIC INFO -->
+      <div class="tab-buttons">
+        <button class="tab-button active" onclick="switchTab('basic')">1. Informações Básicas</button>
+        <button class="tab-button" onclick="switchTab('details')">2. Detalhes do Produto</button>
+        <button class="tab-button" onclick="switchTab('pricing')">3. Preços e Prazos</button>
+        <button class="tab-button" onclick="switchTab('images')">4. Imagens e Complet.</button>
+      </div>
+
+      <!-- TAB 1 CONTENT -->
+      <div id="basic" class="tab-content active">
+        <h2 class="section-title"><span class="badge">1</span> Informações Básicas</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome do Produto <span class="required">*</span></label>
+            <input type="text" placeholder="Ex: Camiseta Social Executiva">
+          </div>
+          <div class="form-group">
+            <label>SKU <span class="required">*</span></label>
+            <input type="text" placeholder="Ex: ANS-CMST-001">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Codigo de Barra (EAN) <span class="required">*</span></label>
+            <input type="text" placeholder="13 dígitos">
+          </div>
+          <div class="form-group">
+            <label>Código Interno</label>
+            <input type="text" placeholder="Opcional">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Categoria Principal <span class="required">*</span></label>
+            <select>
+              <option value="">-- Selecione --</option>
+              <option>Camisetas</option>
+              <option>Calças</option>
+              <option>Saias</option>
+              <option>Jaquetas</option>
+              <option>Uniformes Especiais</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Subcategoria <span class="required">*</span></label>
+            <select>
+              <option value="">-- Selecione --</option>
+              <option>Masculina</option>
+              <option>Feminina</option>
+              <option>Unissex</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Descrição Curta do Produto <span class="required">*</span></label>
+            <textarea placeholder="Uma descrição concisa em 1-2 linhas"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Descrição Completa <span class="required">*</span></label>
+            <textarea placeholder="Descrição detalhada do produto, combinações, cuidados com a peça..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Composição Tecido <span class="required">*</span></label>
+            <select>
+              <option value="">-- Selecione --</option>
+              <option>100% Algodão</option>
+              <option>100% Poliéster</option>
+              <option>Blend (Algodão/Poliéster)</option>
+              <option>Fibra Sintética</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Trama Tecido</label>
+            <input type="text" placeholder="Ex: Jersey, Rib, Sarjado">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Peso Aprox. do Tecido</label>
+            <div class="inline-fields">
+              <input type="number" placeholder="0" style="flex: 0 0 80px;">
+              <span style="padding-top: 12px; font-size: 12px; color: var(--text-light);">g/m²</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Encolhimento Previsto</label>
+            <div class="inline-fields">
+              <input type="number" placeholder="0" style="flex: 0 0 80px;">
+              <span style="padding-top: 12px; font-size: 12px; color: var(--text-light);">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2 CONTENT -->
+      <div id="details" class="tab-content">
+        <h2 class="section-title"><span class="badge">2</span> Detalhes do Produto</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Modelo de Cabeça de Costura</label>
+            <select>
+              <option value="">-- Não aplicável --</option>
+              <option>Redondo</option>
+              <option>V</option>
+              <option>Gola Alta</option>
+              <option>Gola Ampla</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tipo de Mangas</label>
+            <select>
+              <option value="">-- Selecione --</option>
+              <option>Curtas</option>
+              <option>Longas</option>
+              <option>Sem Mangas</option>
+              <option>Fluidas</option>
+              <option>Raglan</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Comprimento da Peça</label>
+            <select>
+              <option value="">-- Selecione --</option>
+              <option>Curto</option>
+              <option>Regular</option>
+              <option>Longo</option>
+              <option>Personalizado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Largura/Ajuste</label>
+            <select>
+              <option value="">-- Selecione --</option>
+              <option>Justo</option>
+              <option>Regular</option>
+              <option>Largo</option>
+              <option>Personalizado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Fechamento/Modelagem</label>
+            <input type="text" placeholder="Ex: Sem fechamento, Botões, Zíper, Elástico">
+          </div>
+          <div class="form-group">
+            <label>Acabamento</label>
+            <select>
+              <option value="">-- Selecione --</option>
+              <option>Simples</option>
+              <option>Dobrado</option>
+              <option>Corrente</option>
+              <option>Overloque</option>
+              <option>Bainha</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Características Especiais do Tecido</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="tech1" name="tech">
+                <label for="tech1">Elastano (spandex)</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="tech2" name="tech">
+                <label for="tech2">Trama anti-pilinha</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="tech3" name="tech">
+                <label for="tech3">Trama impermeável</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="tech4" name="tech">
+                <label for="tech4">Trama repelente a fluidos</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="tech5" name="tech">
+                <label for="tech5">Trama anti-microbial</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="tech6" name="tech">
+                <label for="tech6">Trama respirável</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Cores Disponíveis</label>
+            <textarea placeholder="Descreva as cores disponíveis (ex: Preto, Branco, Azul Marinho, Verde Musgo)"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Tamanhos Disponíveis</label>
+            <textarea placeholder="Descreva os tamanhos (ex: P, M, G, GG) ou faixas etárias"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Recomendação Ideal Para</label>
+            <select>
+              <option value="">-- Selecione --</option>
+              <option>Ambiente Hospitalar</option>
+              <option>Cozinha</option>
+              <option>Sala de Aula</option>
+              <option>Segurança</option>
+              <option>Logística</option>
+              <option>Industrial</option>
+              <option>Comercial</option>
+              <option>Casual</option>
+              <option>Formal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Estação/Climat</label>
+            <select>
+              <option value="">-- Selecione --</option>
+              <option>Verão</option>
+              <option>Inverno</option>
+              <option>Meia-estação</option>
+              <option>Ano todo</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3 CONTENT -->
+      <div id="pricing" class="tab-content">
+        <h2 class="section-title"><span class="badge">3</span> Preços e Prazos</h2>
+
+        <div class="alert alert-info">
+          <div class="alert-icon">i</div>
+          <div>Todos os preços em R$ (Real). Prazos em dias úteis.</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Preço de Custo <span class="required">*</span></label>
+            <div class="inline-fields">
+              <span style="padding-top: 12px; font-size: 14px;">R$</span>
+              <input type="number" step="0.01" placeholder="0.00" style="flex: 1;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Preço de Venda <span class="required">*</span></label>
+            <div class="inline-fields">
+              <span style="padding-top: 12px; font-size: 14px;">R$</span>
+              <input type="number" step="0.01" placeholder="0.00" style="flex: 1;">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Margem de Lucro %</label>
+            <div class="inline-fields">
+              <input type="number" step="0.01" placeholder="0.00" style="flex: 1;">
+              <span style="padding-top: 12px; font-size: 14px;">%</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Preço Prom. (se aplicável)</label>
+            <div class="inline-fields">
+              <span style="padding-top: 12px; font-size: 14px;">R$</span>
+              <input type="number" step="0.01" placeholder="0.00" style="flex: 1;">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prazo de Entrega (Padrão)</label>
+            <div class="inline-fields">
+              <input type="number" placeholder="15" style="flex: 0 0 80px;">
+              <span style="padding-top: 12px; font-size: 12px; color: var(--text-light);">dias úteis</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Estoque Atual</label>
+            <input type="number" placeholder="Quantidade em unidades">
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Descontos por Quantidade</label>
+            <textarea placeholder="Ex:\n1-10 un: R$ 50,00\n11-50 un: R$ 45,00\n51+ un: R$ 40,00"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4 CONTENT -->
+      <div id="images" class="tab-content">
+        <h2 class="section-title"><span class="badge">4</span> Imagens e Complementos</h2>
+
+        <div class="alert alert-info">
+          <div class="alert-icon">i</div>
+          <div>Tamanho recomendado: 1000x1000px (quadrado), JPG ou PNG.</div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Imagem Principal (Frente) <span class="required">*</span></label>
+            <input type="file" accept="image/*">
+            <small style="color: var(--text-muted); margin-top: 4px;">Foto do produto de frente em fundo neutro</small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Imagem Costas</label>
+            <input type="file" accept="image/*">
+            <small style="color: var(--text-muted); margin-top: 4px;">Foto do produto de trás</small>
+          </div>
+          <div class="form-group">
+            <label>Imagem Detalhe 1</label>
+            <input type="file" accept="image/*">
+            <small style="color: var(--text-muted); margin-top: 4px;">Detalhe, textura ou acabamento</small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Imagem Detalhe 2</label>
+            <input type="file" accept="image/*">
+            <small style="color: var(--text-muted); margin-top: 4px;">Outro detalhe importante</small>
+          </div>
+          <div class="form-group">
+            <label>Imagem do Produto em Uso (Opcional)</label>
+            <input type="file" accept="image/*">
+            <small style="color: var(--text-muted); margin-top: 4px;">Produto vestido/utilizado</small>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Vídeo do Produto (Opcional)</label>
+            <input type="file" accept="video/*">
+            <small style="color: var(--text-muted); margin-top: 4px;">Vídeo curto (máx. 30 segundos) mostrando o produto</small>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Tabela de Medidas</label>
+            <textarea placeholder="Cole a tabela de medidas ou descreva:\nTamanho P: Peito X cm, Comprimento Y cm\nTamanho M: Peito X cm, Comprimento Y cm\n..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Certificações e Normas</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="cert1" name="cert">
+                <label for="cert1">ABNT NBR (Norma Brasileira)</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="cert2" name="cert">
+                <label for="cert2">ISO (Padrão Internacional)</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="cert3" name="cert">
+                <label for="cert3">Eco-Friendly (Sustentável)</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="cert4" name="cert">
+                <label for="cert4">Certificação de Tingimento</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="cert5" name="cert">
+                <label for="cert5">Sem certificação especial</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Obs. Adicionais</label>
+            <textarea placeholder="Observações finais, cuidados especiais de conservação, informações extras que não couberam nos campos acima..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="button-group" style="margin-top: 40px;">
+      <button class="btn btn-secondary" onclick="resetForm()">Limpar Formulário</button>
+      <button class="btn btn-primary" onclick="submitForm()">Enviar Cadastro</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchTab(tabName) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+
+    // Show selected tab
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function resetForm() {
+    if (confirm('Deseja realmente limpar o formulário?')) {
+      document.querySelectorAll('input, textarea, select').forEach(field => {
+        if (field.type === 'checkbox' || field.type === 'radio') {
+          field.checked = false;
+        } else {
+          field.value = '';
+        }
+      });
+    }
+  }
+
+  function submitForm() {
+    alert('Formulário de cadastro enviado! Você receberá uma confirmação em breve.');
+  }
+</script>
+</body>
+</html>(input:checked), .checkbox-group label:has(input:checked) {
     border-color: var(--black); background: var(--black); color: var(--white); font-weight: 500;
   }
 
@@ -146,7 +681,7 @@
   .status-banner.visible { display: flex; }
   .status-banner.success { background: #EAF4EA; color: #2D5A2D; border: 1px solid #B8D8B8; }
   .status-banner.error { background: #FAECEB; color: #8C3A3A; border: 1px solid #E0BABA; }
-  .status-banner.info { background: var(--cream-light); color: var(--text-light); border: 1px solid var(--border); }
+  .status-banner.info { background: var(--cream-light); color: var(--text-light); border: 1px solid var(---border); }
 
   /* ===== CONFIG ===== */
   .config-panel {
@@ -215,78 +750,7 @@
       <div class="hint">Cole aqui a URL gerada ao implantar o Apps Script.</div>
       <input type="text" id="appsScriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec" value="https://script.google.com/macros/s/AKfycbxhTVQyJjoncYXvrD-hLbN2CHQbl2tv14QUz7VoYgkf07pjZDVRifgjgexZy2qfaUspyg/exec" oninput="saveConfig()">
     </div>
-    <div id="configStatus" class="status-banner info" style="display:flex;">
-      Sem URL configurada. O botao "Enviar ao Slides" ficara desativado ate configurar.
-    </div>
-  </div>
-
-  <div class="form-card">
-    <form id="produtoForm" autocomplete="off">
-
-      <!-- INFORMACOES BASICAS -->
-      <div class="section-title" style="margin-top:0;">Informacoes do Produto <span class="badge">Obrigatorio</span></div>
-      <div class="two-cols">
-        <div class="form-group">
-          <label class="required">Nome / Referencia</label>
-          <input type="text" id="nome" placeholder="Ex: Vestido Scena 18678">
-        </div>
-        <div class="form-group">
-          <label>Codigo / SKU</label>
-          <input type="text" id="codigo" placeholder="Ex: 18678">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="required">Tipo de Peca</label>
-        <div class="radio-group" id="tipoGroup">
-          <label><input type="radio" name="tipo" value="Sueter"><span>Sueter</span></label>
-          <label><input type="radio" name="tipo" value="Cardigan"><span>Cardigan</span></label>
-          <label><input type="radio" name="tipo" value="Blusa"><span>Blusa</span></label>
-          <label><input type="radio" name="tipo" value="Vestido"><span>Vestido</span></label>
-          <label><input type="radio" name="tipo" value="Maxipull"><span>Maxipull</span></label>
-          <label><input type="radio" name="tipo" value="Top"><span>Top</span></label>
-          <label><input type="radio" name="tipo" value="Colete"><span>Colete</span></label>
-          <label><input type="radio" name="tipo" value="Casaco"><span>Casaco</span></label>
-          <label><input type="radio" name="tipo" value="Regata"><span>Regata</span></label>
-          <label><input type="radio" name="tipo" value="Body"><span>Body</span></label>
-          <label><input type="radio" name="tipo" value="Saia"><span>Saia</span></label>
-          <label><input type="radio" name="tipo" value="Calca"><span>Calca</span></label>
-          <label><input type="radio" name="tipo" value="Capa"><span>Capa</span></label>
-          <label><input type="radio" name="tipo" value="Pelerine"><span>Pelerine</span></label>
-          <label><input type="radio" name="tipo" value="Polo"><span>Polo</span></label>
-          <label><input type="radio" name="tipo" value="Conjunto"><span>Conjunto</span></label>
-          <label><input type="radio" name="tipo" value="Acessorio"><span>Acessorio</span></label>
-          <label><input type="radio" name="tipo" value="Outro"><span>Outro</span></label>
-        </div>
-      </div>
-
-      <div class="form-group" id="tipoOutroGroup" style="display:none;">
-        <label>Especifique o tipo</label>
-        <input type="text" id="tipoOutro" placeholder="Ex: Poncho, Bolero, Macacao...">
-      </div>
-
-      <div class="two-cols">
-        <div class="form-group">
-          <label>Colecao</label>
-          <input type="text" id="colecao" placeholder="Ex: Maestra, Inverno 2026...">
-        </div>
-        <div class="form-group">
-          <label class="required">Cor Principal</label>
-          <input type="text" id="cor" placeholder="Ex: Off-white, Azul-marinho...">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Cores Secundarias / Detalhes de cor</label>
-        <input type="text" id="corSecundaria" placeholder="Ex: Detalhes em dourado, botoes pretos, listras em cru...">
-      </div>
-
-      <!-- CONSTRUCAO E MATERIAIS -->
-      <div class="section-title">Construcao e Materiais</div>
-
-      <div class="form-group">
-        <label class="required">Composicao / Material</label>
-        <div class="hint">Informe os materiais e percentuais, se disponiveis</div>
+    <div id="configStatus" class="status-banner info" style="display:flex;">\n      Sem URL configurada. O botao \"Enviar ao Slides\" ficara desativado ate configurar.\n    </div>\n  </div>\n\n  <div class=\"form-card\">\n    <form id=\"produtoForm\" autocomplete=\"off\">\n\n      <!-- INFORMACOES BASICAS -->\n      <div class=\"section-title\" style=\"margin-top:0;\">Informacoes do Produto <span class=\"badge\">Obrigatorio</span></div>\n\n      <div class=\"two-cols\">\n        <div class=\"form-group\">\n          <label class=\"required\">Nome / Referencia</label>\n          <input type=\"text\" id=\"nome\" placeholder=\"Ex: Vestido Scena 18678\">\n        </div>\n        <div class=\"form-group\">\n          <label>Codigo / SKU</label>\n          <input type=\"text\" id=\"codigo\" placeholder=\"Ex: 18678\">\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <label class=\"required\">Tipo de Peca</label>\n        <div class=\"radio-group\" id=\"tipoGroup\">\n          <label><input type=\"radio\" name=\"tipo\" value=\"Sueter\"><span>Sueter</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Cardigan\"><span>Cardigan</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Blusa\"><span>Blusa</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Vestido\"><span>Vestido</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Maxipull\"><span>Maxipull</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Top\"><span>Top</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Colete\"><span>Colete</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Casaco\"><span>Casaco</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Regata\"><span>Regata</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Body\"><span>Body</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Saia\"><span>Saia</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Calca\"><span>Calca</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Capa\"><span>Capa</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Pelerine\"><span>Pelerine</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Polo\"><span>Polo</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Conjunto\"><span>Conjunto</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Acessorio\"><span>Acessorio</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Tenis\"><span>Tenis</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Chinelo\"><span>Chinelo</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Bota\"><span>Bota</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Sandalia\"><span>Sandalia</span></label>\n          <label><input type=\"radio\" name=\"tipo\" value=\"Outro\"><span>Outro</span></label>\n        </div>\n      </div>\n\n      <div class=\"form-group\" id=\"tipoOutroGroup\" style=\"display:none;\">\n        <label>Especifique o tipo</label>\n        <input type=\"text\" id=\"tipoOutro\" placeholder=\"Ex: Poncho, Bolero, Macacao...\">\n      </div>\n\n      <div class=\"two-cols\">\n        <div class=\"form-group\">\n          <label>Colecao</label>\n          <input type=\"text\" id=\"colecao\" placeholder=\"Ex: Maestera, Inverno 2026...\">\n        </div>\n        <div class=\"form-group\">\n          <label class=\"required\">Cor Principal</label>\n          <input type=\"text\" id=\"cor\" placeholder=\"Ex: Off-white, Azul-marinho...\">\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <label>Cores Secundarias / Detalhes de cor</label>\n        <input type=\"text\" id=\"corSecundaria\" placeholder=\"Ex: Detalhes em dourado, botoes pretos, listras em cru...\">\n      </div>\n\n      <!-- CONSTRUCAO E MATERIAIS -->\n      <div class=\"section-title\">Construcao e Materiais</div>\n\n      <div class=\"form-group\">\n        <label class=\"required\">Composicao / Material</label>\n        <div class=\"hint\">Informe os materiais e percentuais, se disponiveis</div>\n        <input type=\"text\" id=\"composicao\" placeholder=\"Ex: 70% Algodao, 30% Poliamida | ou: Fio Londres\">\n      </div>\n\n      <div class=\"form-group\">\n        <label class=\"required\">Ponto / Textura de Tricô</label>\n        <div class=\"radio-group\" id=\"pontoGroup\">\n          <label><input type=\"radio\" name=\"ponto\" value=\"Ponto perola\"><span>Ponto perola</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Trama canelada\"><span>Trama canelada</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Meia-malha\"><span>Meia-malha</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Ponto em links\"><span>Ponto em links</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Tricô 3D\"><span>Tricô 3D</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Jacquard\"><span>Jacquard</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Pointelle\"><span>Pointelle</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Nervura\"><span>Nervura</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Trancado\"><span>Trancado</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Liso\"><span>Liso</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Croche\"><span>Croche</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Ponto bolinha\"><span>Ponto bolinha</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Waffle\"><span>Waffle</span></label>\n          <label><input type=\"radio\" name=\"ponto\" value=\"Outro\"><span>Outro</span></label>\n        </div>\n      </div>\n\n      <div class=\"form-group\" id=\"pontoOutroGroup\" style=\"display:none;\">\n        <label>Especifique o ponto/textura</label>\n        <input type=\"text\" id=\"pontoOutro\" placeholder=\"Ex: Ajoure, Rendado, Piquet...\">\n      </div>\n\n      <!-- DESIGN E MODELAGEM -->\n      <div class=\"section-title\">Design e Modelagem</div>\n\n      <div class=\"two-cols\">\n        <div class=\"form-group\">\n          <label class=\"required\">Decote</label>\n          <span id=\"prepHint\" style=\"display:none;\"></span>\n          <select id=\"golaDecode\" onchange=\"toggleOutroGola()\">\n            <option value=\"\">Selecione...</option>\n            <option value=\"decote|Decote redondo\">Decote redondo</option>\n            <option value=\"decote|Decote careca\">Decote careca</option>\n            <option value=\"decote|Decote em V\">Decote em V</option>\n            <option value=\"decote|Decote quadrado\">Decote quadrado</option>\n            <option value=\"decote|Decote ombro a ombro\">Decote ombro a ombro</option>\n            <option value=\"decote|Decote canoa\">Decote canoa</option>\n            <option value=\"decote|Decote halter\">Decote halter</option>\n            <option value=\"decote|Decote bardot\">Decote bardot</option>\n            <option value=\"decote|Decote cruzado\">Decote cruzado</option>\n            <option value=\"outro|Sem decote definido\">Sem decote definido</option>\n            <option value=\"outro|__outro__\">Outro (digitar)</option>\n          </select>\n          <input type=\"text\" id=\"golaDecode\" class=\"campo-outro\" style=\"display:none; margin-top:8px;\" placeholder=\"Descreva o decote...\">\n        </div>\n\n        <div class=\"form-group\">\n          <label class=\"required\">Manga</label>\n          <select id=\"manga\" onchange=\"toggleOutro('manga','mangaOutro')\">\n            <option value=\"\">Selecione...</option>\n            <option value=\"Manga longa\">Manga longa</option>\n            <option value=\"Manga curta\">Manga curta</option>\n            <option value=\"Manga ampla\">Manga ampla</option>\n            <option value=\"Manga balloon\">Manga balloon</option>\n            <option value=\"Manga bufante\">Manga bufante</option>\n            <option value=\"Manga kimono\">Manga kimono</option>\n            <option value=\"Manga morcego\">Manga morcego</option>\n            <option value=\"Manga tres-quartos\">Manga tres-quartos</option>\n            <option value=\"Manga raglan\">Manga raglan</option>\n            <option value=\"Manga abalonada\">Manga abalonada</option>\n            <option value=\"Manga franzida\">Manga franzida</option>\n            <option value=\"Manga japonesa\">Manga japonesa</option>\n            <option value=\"Manga caida\">Manga caida</option>\n            <option value=\"Manga extra longa\">Manga extra longa</option>\n            <option value=\"Sem manga\">Sem manga</option>\n            <option value=\"Alcas\">Alcas</option>\n            <option value=\"__outro__\">Outro (digitar)</option>\n          </select>\n          <input type=\"text\" id=\"mangaOutro\" class=\"campo-outro\" style=\"display:none; margin-top:8px;\" placeholder=\"Descreva a manga...\">\n        </div>\n      </div>\n\n      <div class=\"two-cols\">\n        <div class=\"form-group\">\n          <label class=\"required\">Modelagem / Caimento</label>\n          <select id=\"modelagem\" onchange=\"toggleOutro('modelagem','modelagemOutro')\">\n            <option value=\"\">Selecione...</option>\n            <option value=\"Ajustada\">Ajustada (Slim fit)</option>\n            <option value=\"Regular\">Regular</option>\n            <option value=\"Ampla\">Ampla (Relaxed)</option>\n            <option value=\"Oversized\">Oversized</option>\n            <option value=\"Evase\">Evase</option>\n            <option value=\"Reta\">Reta</option>\n            <option value=\"__outro__\">Outro (digitar)</option>\n          </select>\n          <input type=\"text\" id=\"modelagemOutro\" class=\"campo-outro\" style=\"display:none; margin-top:8px;\" placeholder=\"Descreva a modelagem...\">\n        </div>\n        <div class=\"form-group\">\n          <label>Comprimento</label>\n          <select id=\"comprimento\" onchange=\"toggleOutro('comprimento','comprimentoOutro')\">\n            <option value=\"\">Selecione (se aplicavel)...</option>\n            <option value=\"Cropped\">Cropped</option>\n            <option value=\"Curto\">Curto</option>\n            <option value=\"Medio\">Medio</option>\n            <option value=\"Midi\">Midi</option>\n            <option value=\"Longo\">Longo</option>\n            <option value=\"Maxi\">Maxi</option>\n            <option value=\"__outro__\">Outro (digitar)</option>\n          </select>\n          <input type=\"text\" id=\"comprimentoOutro\" class=\"campo-outro\" style=\"display:none; margin-top:8px;\" placeholder=\"Descreva o comprimento...\">\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <label>Fechamento</label>\n        <div class=\"radio-group\">\n          <label><input type=\"radio\" name=\"fecho\" value=\"Sem fecho\"><span>Sem fecho</span></label>\n          <label><input type=\"radio\" name=\"fecho\" value=\"Botoes\"><span>Botoes</span></label>\n          <label><input type=\"radio\" name=\"fecho\" value=\"Zipper\"><span>Zipper</span></label>\n          <label><input type=\"radio\" name=\"fecho\" value=\"Lacao\"><span>Lacao</span></label>\n          <label><input type=\"radio\" name=\"fecho\" value=\"Amarracao\"><span>Amarracao</span></label>\n          <label><input type=\"radio\" name=\"fecho\" value=\"Transpasse\"><span>Transpasse</span></label>\n          <label><input type=\"radio\" name=\"fecho\" value=\"Fivela\"><span>Fivela</span></label>\n          <label><input type=\"radio\" name=\"fecho\" value=\"Outro\"><span>Outro</span></label>\n        </div>\n        <input type=\"text\" id=\"fechoOutro\" class=\"campo-outro\" style=\"display:none; margin-top:8px;\" placeholder=\"Descreva o fechamento...\">\n      </div>\n\n      <!-- DETALHES -->\n      <div class=\"section-title\">Detalhes e Acabamentos</div>\n\n      <div class=\"form-group\">\n        <label>Detalhes Construtivos</label>\n        <div class=\"hint\">Selecione todos os que se aplicam</div>\n        <div class=\"checkbox-group\" id=\"detalhesGroup\">\n          <label><input type=\"checkbox\" value=\"Cintura Alta\"><span>Cintura Alta</span></label>\n          <label><input type=\"checkbox\" value=\"Cintura Elastica\"><span>Cintura Elastica</span></label>\n          <label><input type=\"checkbox\" value=\"Barra Italiana\"><span>Barra Italiana</span></label>s, se disponiveis</div>
         <input type="text" id="composicao" placeholder="Ex: 70% Algodao, 30% Poliamida | ou: Fio Londres">
       </div>
 
@@ -320,37 +784,23 @@
 
       <div class="two-cols">
         <div class="form-group">
-          <label class="required">Gola ou Decote <span id="prepHint" class="prep-hint" style="display:none;"></span></label>
-          <select id="golaDecote" onchange="updatePrepHint(); toggleOutroGola()">
+          <label class="required">Decote</label>
+          <span id="prepHint" style="display:none;"></span>
+          <select id="golaDecote" onchange="toggleOutroGola()">
             <option value="">Selecione...</option>
-            <optgroup label="GOLAS (preposicao DE)">
-              <option value="gola|Gola alta">Gola alta</option>
-              <option value="gola|Gola chamine">Gola chamine</option>
-              <option value="gola|Gola role">Gola role</option>
-              <option value="gola|Gola polo">Gola polo</option>
-              <option value="gola|Gola perkins">Gola perkins</option>
-              <option value="gola|Gola subida">Gola subida</option>
-              <option value="gola|Gola redonda">Gola redonda</option>
-              <option value="gola|Gola V">Gola V</option>
-            </optgroup>
-            <optgroup label="DECOTES (preposicao COM)">
-              <option value="decote|Decote redondo">Decote redondo</option>
-              <option value="decote|Decote careca">Decote careca</option>
-              <option value="decote|Decote em V">Decote em V</option>
-              <option value="decote|Decote quadrado">Decote quadrado</option>
-              <option value="decote|Decote ombro a ombro">Decote ombro a ombro</option>
-              <option value="decote|Decote canoa">Decote canoa</option>
-              <option value="decote|Decote halter">Decote halter</option>
-              <option value="decote|Decote bardot">Decote bardot</option>
-              <option value="decote|Decote cruzado">Decote cruzado</option>
-            </optgroup>
-            <optgroup label="OUTROS">
-              <option value="outro|Sem gola/decote definido">Sem gola/decote definido</option>
-              <option value="outro|Capuz">Capuz</option>
-              <option value="outro|__outro__">Outro (digitar)</option>
-            </optgroup>
+            <option value="decote|Decote redondo">Decote redondo</option>
+            <option value="decote|Decote careca">Decote careca</option>
+            <option value="decote|Decote em V">Decote em V</option>
+            <option value="decote|Decote quadrado">Decote quadrado</option>
+            <option value="decote|Decote ombro a ombro">Decote ombro a ombro</option>
+            <option value="decote|Decote canoa">Decote canoa</option>
+            <option value="decote|Decote halter">Decote halter</option>
+            <option value="decote|Decote bardot">Decote bardot</option>
+            <option value="decote|Decote cruzado">Decote cruzado</option>
+            <option value="outro|Sem decote definido">Sem decote definido</option>
+            <option value="outro|__outro__">Outro (digitar)</option>
           </select>
-          <input type="text" id="golaDecoteOutro" class="campo-outro" style="display:none; margin-top:8px;" placeholder="Descreva a gola ou decote...">
+          <input type="text" id="golaDecoteOutro" class="campo-outro" style="display:none; margin-top:8px;" placeholder="Descreva o decote...">
         </div>
 
         <div class="form-group">
@@ -414,10 +864,10 @@
         <label>Fechamento</label>
         <div class="radio-group">
           <label><input type="radio" name="fecho" value="Sem fecho"><span>Sem fecho</span></label>
-          <label><input type="radio" name="fecho" value="Botoes"><span>Botoes</span></label>
-          <label><input type="radio" name="fecho" value="Ziper"><span>Ziper</span></label>
-          <label><input type="radio" name="fecho" value="Laco"><span>Laco</span></label>
-          <label><input type="radio" name="fecho" value="Amarracao"><span>Amarracao</span></label>
+          <label><input type="radio" name="fecho" value="Botões"><span>Botões</span></label>
+          <label><input type="radio" name="fecho" value="Zíper"><span>Zíper</span></label>
+          <label><input type="radio" name="fecho" value="Laço"><span>Laço</span></label>
+          <label><input type="radio" name="fecho" value="Amarração"><span>Amarração</span></label>
           <label><input type="radio" name="fecho" value="Transpasse"><span>Transpasse</span></label>
           <label><input type="radio" name="fecho" value="Fivela"><span>Fivela</span></label>
           <label><input type="radio" name="fecho" value="Outro"><span>Outro</span></label>
@@ -432,25 +882,32 @@
         <label>Detalhes Construtivos</label>
         <div class="hint">Selecione todos os que se aplicam</div>
         <div class="checkbox-group" id="detalhesGroup">
-          <label><input type="checkbox" value="Franjas na barra"><span>Franjas na barra</span></label>
-          <label><input type="checkbox" value="Fake fur"><span>Fake fur</span></label>
+          <label><input type="checkbox" value="Cintura Alta"><span>Cintura Alta</span></label>
+          <label><input type="checkbox" value="Cintura Elástica"><span>Cintura Elástica</span></label>
+          <label><input type="checkbox" value="Barra Italiana"><span>Barra Italiana</span></label>
+          <label><input type="checkbox" value="Barra Reta"><span>Barra Reta</span></label>
+          <label><input type="checkbox" value="Acabamento em Rolinho"><span>Acabamento em Rolinho</span></label>
+          <label><input type="checkbox" value="Fenda Lateral"><span>Fenda Lateral</span></label>
+          <label><input type="checkbox" value="Recorte Lateral"><span>Recorte Lateral</span></label>
+          <label><input type="checkbox" value="Abertura Frontal"><span>Abertura Frontal</span></label>
+          <label><input type="checkbox" value="Abertura nas Costas"><span>Abertura nas Costas</span></label>
+          <label><input type="checkbox" value="Com Cinto"><span>Com Cinto</span></label>
+          <label><input type="checkbox" value="Com Forro"><span>Com Forro</span></label>
+          <label><input type="checkbox" value="Com Bolso"><span>Com Bolso</span></label>
+          <label><input type="checkbox" value="Franjas"><span>Franjas</span></label>
+          <label><input type="checkbox" value="Lapelas"><span>Lapelas</span></label>
+          <label><input type="checkbox" value="Pele Fake"><span>Pele Fake</span></label>
           <label><input type="checkbox" value="Capuz"><span>Capuz</span></label>
-          <label><input type="checkbox" value="Bolsos frontais"><span>Bolsos frontais</span></label>
-          <label><input type="checkbox" value="Bolsos embutidos"><span>Bolsos embutidos</span></label>
+          <label><input type="checkbox" value="Bolsos Embutidos"><span>Bolsos Embutidos</span></label>
           <label><input type="checkbox" value="Punhos"><span>Punhos</span></label>
-          <label><input type="checkbox" value="Cos elastico"><span>Cos elastico</span></label>
-          <label><input type="checkbox" value="Pregas laterais"><span>Pregas laterais</span></label>
-          <label><input type="checkbox" value="Cava reta"><span>Cava reta</span></label>
-          <label><input type="checkbox" value="Folhos"><span>Folhos</span></label>
-          <label><input type="checkbox" value="Ombros caidos"><span>Ombros caidos</span></label>
-          <label><input type="checkbox" value="Fenda lateral"><span>Fenda lateral</span></label>
-          <label><input type="checkbox" value="Barra assimetrica"><span>Barra assimetrica</span></label>
-          <label><input type="checkbox" value="Gola avulsa"><span>Gola avulsa</span></label>
-          <label><input type="checkbox" value="Cut-out"><span>Cut-out</span></label>
-          <label><input type="checkbox" value="Cordao"><span>Cordao</span></label>
-          <label><input type="checkbox" value="Apliques"><span>Apliques</span></label>
-          <label><input type="checkbox" value="Barra ribana"><span>Barra ribana</span></label>
-          <label><input type="checkbox" value="Sem costura"><span>Sem costura</span></label>
+          <label><input type="checkbox" value="Cós Elástico"><span>Cós Elástico</span></label>
+          <label><input type="checkbox" value="Pregas Laterais"><span>Pregas Laterais</span></label>
+          <label><input type="checkbox" value="Cava Reta"><span>Cava Reta</span></label>
+          <label><input type="checkbox" value="Ombro Caído"><span>Ombro Caído</span></label>
+          <label><input type="checkbox" value="Franjas na Barra"><span>Franjas na Barra</span></label>
+          <label><input type="checkbox" value="Barra Assimétrica"><span>Barra Assimétrica</span></label>
+          <label><input type="checkbox" value="Gola Avulsa"><span>Gola Avulsa</span></label>
+          <label><input type="checkbox" value="Peça 3D"><span>Peça 3D</span></label>
         </div>
       </div>
 
@@ -573,7 +1030,7 @@
     slot.classList.add('has-image');
     slot.innerHTML = `
       <span class="slot-tag"${tagStyle}>${tagText}</span>
-      <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}');">
+      <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}')">
       <button type="button" class="photo-remove" onclick="event.stopPropagation(); removePhoto('${slotKey}');">&times;</button>
       <img src="${dataUrl}" class="photo-preview" alt="${tagText}">
       <div class="photo-name">${fileName}</div>
