@@ -213,7 +213,7 @@
     <div class="form-group">
       <label>URL do Google Apps Script (Web App)</label>
       <div class="hint">Cole aqui a URL gerada ao implantar o Apps Script.</div>
-      <input type="text" id="appsScriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec" oninput="saveConfig()">
+      <input type="text" id="appsScriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec" value="https://script.google.com/macros/s/AKfycbxhTVQyJjoncYXvrD-hLbN2CHQbl2tv14QUz7VoYgkf07pjZDVRifgjgexZy2qfaUspyg/exec" oninput="saveConfig()">
     </div>
     <div id="configStatus" class="status-banner info" style="display:flex;">
       Sem URL configurada. O botao "Enviar ao Slides" ficara desativado ate configurar.
@@ -823,9 +823,10 @@
       const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
       if (saved.url) {
         document.getElementById('appsScriptUrl').value = saved.url;
-        updateConfigStatus(saved.url);
       }
     } catch(e) {}
+    const url = getAppsScriptUrl();
+    if (url) updateConfigStatus(url);
   }
 
   function updateConfigStatus(url) {
