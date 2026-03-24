@@ -208,7 +208,16 @@
 <div class="container">
 
   <!-- CONFIG PANEL -->
-  <button class="config-toggle" onclick="toggleConfig()">Configurar Google Slides</button>
+  <!-- LINK SLIDES -->
+  <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
+    <button class="config-toggle" onclick="toggleConfig()" style="margin-bottom:0;">Configurar Google Slides</button>
+    <a href="https://docs.google.com/presentation/d/1UWv-lJN5MhxD0yCZrMHUizPA67luwubR6y3ocZc9prc/edit" target="_blank"
+       style="display:inline-flex; align-items:center; gap:8px; background:#231F20; color:#F5F0EB; text-decoration:none; padding:10px 18px; font-size:12px; letter-spacing:1px; font-family:inherit; border-radius:2px; transition:opacity .2s;"
+       onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      Ver Apresentação no Google Slides
+    </a>
+  </div>
   <div id="configPanel" class="config-panel">
     <div class="config-title">Integracao Google Slides</div>
     <div class="form-group">
@@ -442,7 +451,7 @@
           <label><input type="checkbox" value="Capuz"><span>Capuz</span></label>
           <label><input type="checkbox" value="Bolsos Embutidos"><span>Bolsos Embutidos</span></label>
           <label><input type="checkbox" value="Punhos"><span>Punhos</span></label>
-          <label><input type="checkbox" value="Cóss Elástico"><span>Cós Elástico</span></label>
+          <label><input type="checkbox" value="Cós Elástico"><span>Cós Elástico</span></label>
           <label><input type="checkbox" value="Pregas Laterais"><span>Pregas Laterais</span></label>
           <label><input type="checkbox" value="Cava Reta"><span>Cava Reta</span></label>
           <label><input type="checkbox" value="Ombro Caído"><span>Ombro Caído</span></label>
@@ -453,7 +462,7 @@
         </div>
       </div>
 
-      <a>div class="form-group">
+      <div class="form-group">
         <label>Outros Detalhes (texto livre)</label>
         <textarea id="detalhesLivre" rows="2" placeholder="Descreva qualquer detalhe adicional que nao esteja nas opcoes acima..."></textarea>
       </div>
@@ -537,6 +546,24 @@
   const photos = { still1: null, still2: null, modelo: null };
   const photoNames = { still1: null, still2: null, modelo: null };
 
+  // Redimensiona imagem para max 1200px (necessario para insertImage do Google Slides)
+  function resizeImage(dataUrl, maxSize, quality, callback) {
+    const img = new Image();
+    img.onload = function() {
+      let w = img.width, h = img.height;
+      if (w > maxSize || h > maxSize) {
+        if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+        else       { w = Math.round(w * maxSize / h); h = maxSize; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      callback(canvas.toDataURL('image/jpeg', quality));
+    };
+    img.src = dataUrl;
+  }
+
   function handlePhoto(event, slotKey) {
     const file = event.target.files[0];
     if (!file) return;
@@ -555,10 +582,13 @@
 
     const reader = new FileReader();
     reader.onload = function(e) {
-      photos[slotKey] = e.target.result;
-      photoNames[slotKey] = file.name;
-      showPhotoInSlot(slotKey, e.target.result, file.name);
-      updatePhotoCounter();
+      // Redimensiona para max 1200px antes de armazenar (Google Slides insertImage tem limite de tamanho)
+      resizeImage(e.target.result, 1200, 0.85, function(resizedDataUrl) {
+        photos[slotKey] = resizedDataUrl;
+        photoNames[slotKey] = file.name.replace(/\.[^.]+$/, '.jpg'); // sempre .jpg apos conversao
+        showPhotoInSlot(slotKey, resizedDataUrl, photoNames[slotKey]);
+        updatePhotoCounter();
+      });
     };
     reader.readAsDataURL(file);
   }
