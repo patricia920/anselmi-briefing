@@ -3,195 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anselmi — Cadastro de Produto</title>
+<title>Anselmi â Cadastro de Produto</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --black: #231F20;
-    --white: #FFFFFF;
-    --cream: #F5F0EB;
-    --cream-light: #FAF8F5;
-    --beige: #E8E0D8;
-    --beige-dark: #D4C9BD;
-    --text: #231F20;
-    --text-light: #6B6461;
-    --text-muted: #9B9490;
-    --border: #D4C9BD;
-    --border-light: #E8E0D8;
-    --red: #C85A54;
-    --green: #5B8C5A;
-    --blue-hint: #DAE5F0;
-    --pink-hint: #F5E0E8;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Montserrat', -apple-system, sans-serif; color: var(--text); line-height: 1.6; background: var(--cream); }
+:root {
+  --black: #231F20;
+  --white: #FFFFFF;
+  --cream: #F5F0EB;
+  --cream-light: #FAF8F5;
+  --beige: #E8E0D8;
+  --beige-dark: #D4C9BD;
+  --text: #231F20;
+  --text-light: #6B6461;
+  --text-muted: #9B9490;
+  --border: #D4C9BD;
+  --border-light: #E8E0D8;
+  --red: #C85A54;
+  --green: #5B8C5A;
+  --blue-hint: #DAE5F0;
+  --pink-hint: #F5E0E8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Montserrat', -apple-system, sans-serif; color: var(--text); line-height: 1.6; background: var(--cream); }
 
-  /* ===== HEADER ===== */
-  .top-bar { background: var(--black); color: #fff; text-align: center; padding: 10px 20px; font-size: 11px; letter-spacing: 2px; font-weight: 400; text-transform: uppercase; }
-  .header { background: var(--white); padding: 24px 0; text-align: center; border-bottom: 1px solid var(--border-light); }
-  .header .logo { height: 28px; }
-  .header .subtitle { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); font-weight: 400; margin-top: 8px; }
+/* ===== HEADER ===== */
+.top-bar { background: var(--black); color: #fff; text-align: center; padding: 10px 20px; font-size: 11px; letter-spacing: 2px; font-weight: 400; text-transform: uppercase; }
+.header { background: var(--white); padding: 24px 0; text-align: center; border-bottom: 1px solid var(--border-light); }
+.header .logo { height: 28px; }
+.header .subtitle { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); font-weight: 400; margin-top: 8px; }
 
-  /* ===== CONTAINER ===== */
-  .container { max-width: 840px; margin: 40px auto; padding: 0 24px; }
+/* ===== CONTAINER ===== */
+.container { max-width: 840px; margin: 40px auto; padding: 0 24px; }
 
-  /* ===== FORM CARD ===== */
-  .form-card { background: var(--white); border-radius: 2px; box-shadow: 0 1px 4px rgba(35,31,32,0.06); padding: 40px; }
+/* ===== FORM CARD ===== */
+.form-card { background: var(--white); border-radius: 2px; box-shadow: 0 1px 4px rgba(35,31,32,0.06); padding: 40px; }
+.section-title { font-size: 11px; color: var(--text); font-weight: 600; margin: 36px 0 18px; letter-spacing: 3px; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid var(--black); display: flex; align-items: center; gap: 10px; }
+.section-title:first-child { margin-top: 0; }
+.section-title .badge { font-size: 9px; background: var(--black); color: var(--white); padding: 3px 10px; border-radius: 0; font-weight: 500; letter-spacing: 1.5px; }
+.form-group { margin-bottom: 20px; }
+.form-group > label { display: block; font-weight: 500; font-size: 11px; color: var(--text-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1.5px; }
+.form-group .hint { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: 400; }
+input[type="text"], textarea, select { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 0; font-size: 13px; font-family: inherit; transition: border 0.3s; background: var(--white); color: var(--text); }
+input::placeholder, textarea::placeholder { color: var(--beige-dark); }
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--black); }
+textarea { resize: vertical; min-height: 70px; }
+select { cursor: pointer; background: var(--white); -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23231F20' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
 
-  .section-title {
-    font-size: 11px; color: var(--text); font-weight: 600; margin: 36px 0 18px;
-    letter-spacing: 3px; text-transform: uppercase; padding-bottom: 10px;
-    border-bottom: 1px solid var(--black); display: flex; align-items: center; gap: 10px;
-  }
-  .section-title:first-child { margin-top: 0; }
-  .section-title .badge {
-    font-size: 9px; background: var(--black); color: var(--white); padding: 3px 10px;
-    border-radius: 0; font-weight: 500; letter-spacing: 1.5px;
-  }
+/* Radio & Checkbox pills */
+.radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.radio-group label, .checkbox-group label { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 0; cursor: pointer; font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0.3px; transition: all 0.2s; background: var(--white); color: var(--text-light); }
+.radio-group label:hover, .checkbox-group label:hover { border-color: var(--black); color: var(--text); }
+.radio-group input, .checkbox-group input { display: none; }
+.radio-group label:has(input:checked), .checkbox-group label:has(input:checked) { border-color: var(--black); background: var(--black); color: var(--white); font-weight: 500; }
+.two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) {
+  .two-cols, .three-cols { grid-template-columns: 1fr; }
+  .form-card { padding: 24px; }
+  .container { padding: 0 16px; margin: 24px auto; }
+  .photos-grid { grid-template-columns: 1fr !important; }
+}
 
-  .form-group { margin-bottom: 20px; }
-  .form-group > label {
-    display: block; font-weight: 500; font-size: 11px; color: var(--text-light);
-    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1.5px;
-  }
-  .form-group .hint { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: 400; }
+/* ===== BUTTONS ===== */
+.btn-row { display: flex; gap: 12px; margin-top: 36px; justify-content: flex-end; flex-wrap: wrap; }
+.btn { padding: 14px 32px; border: none; border-radius: 0; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: inherit; letter-spacing: 2px; text-transform: uppercase; }
+.btn-primary { background: var(--black); color: var(--white); }
+.btn-primary:hover { background: #3a3536; }
+.btn-secondary { background: var(--white); color: var(--text); border: 1px solid var(--black); }
+.btn-secondary:hover { background: var(--cream-light); }
+.btn-primary.sending { opacity: 0.5; pointer-events: none; }
+.required::after { content: " *"; color: var(--red); font-weight: 400; }
 
-  input[type="text"], textarea, select {
-    width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 0;
-    font-size: 13px; font-family: inherit; transition: border 0.3s; background: var(--white); color: var(--text);
-  }
-  input::placeholder, textarea::placeholder { color: var(--beige-dark); }
-  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--black); }
-  textarea { resize: vertical; min-height: 70px; }
-  select { cursor: pointer; background: var(--white); -webkit-appearance: none; appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23231F20' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat; background-position: right 14px center;
-  }
+/* Preposition hint */
+.prep-hint { display: inline-block; font-size: 10px; padding: 3px 10px; margin-left: 8px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.prep-hint.de { background: var(--blue-hint); color: #2E5A88; }
+.prep-hint.com { background: var(--pink-hint); color: #8C3A5A; }
 
-  /* Radio & Checkbox pills */
-  .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-  .radio-group label, .checkbox-group label {
-    display: flex; align-items: center; gap: 6px; padding: 8px 16px;
-    border: 1px solid var(--border); border-radius: 0; cursor: pointer;
-    font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0.3px;
-    transition: all 0.2s; background: var(--white); color: var(--text-light);
-  }
-  .radio-group label:hover, .checkbox-group label:hover { border-color: var(--black); color: var(--text); }
-  .radio-group input, .checkbox-group input { display: none; }
-  .radio-group label:has(input:checked), .checkbox-group label:has(input:checked) {
-    border-color: var(--black); background: var(--black); color: var(--white); font-weight: 500;
-  }
+/* ===== PHOTO UPLOAD ===== */
+.photos-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.photo-slot { border: 2px dashed var(--border); padding: 20px 12px; text-align: center; cursor: pointer; transition: all 0.3s; position: relative; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: var(--cream-light); }
+.photo-slot:hover { border-color: var(--black); background: var(--white); }
+.photo-slot.has-image { border-style: solid; border-color: var(--border); padding: 8px; }
+.photo-slot input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.photo-slot .slot-icon { font-size: 28px; color: var(--beige-dark); line-height: 1; }
+.photo-slot .slot-label { font-size: 10px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+.photo-slot .slot-hint { font-size: 10px; color: var(--beige-dark); }
+.photo-slot .photo-preview { max-width: 100%; max-height: 180px; object-fit: contain; }
+.photo-slot .photo-remove { position: absolute; top: 6px; right: 6px; background: var(--black); color: var(--white); border: none; width: 22px; height: 22px; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; opacity: 0.7; transition: opacity 0.2s; }
+.photo-slot .photo-remove:hover { opacity: 1; }
+.photo-slot .photo-name { font-size: 9px; color: var(--text-muted); margin-top: 4px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.photo-slot .slot-tag { position: absolute; top: 0; left: 0; background: var(--black); color: var(--white); font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; padding: 3px 10px; }
 
-  .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+/* ===== STATUS ===== */
+.status-banner { margin-top: 16px; padding: 14px 20px; font-size: 12px; letter-spacing: 0.3px; display: none; align-items: center; gap: 10px; }
+.status-banner.visible { display: flex; }
+.status-banner.success { background: #EAF4EA; color: #2D5A2D; border: 1px solid #B8D8B8; }
+.status-banner.error { background: #FAECEB; color: #8C3A3A; border: 1px solid #E0BABA; }
+.status-banner.info { background: var(--cream-light); color: var(--text-light); border: 1px solid var(--border); }
 
-  @media (max-width: 640px) {
-    .two-cols, .three-cols { grid-template-columns: 1fr; }
-    .form-card { padding: 24px; }
-    .container { padding: 0 16px; margin: 24px auto; }
-    .photos-grid { grid-template-columns: 1fr !important; }
-  }
+/* ===== CONFIG ===== */
+.config-panel { background: var(--cream-light); border: 1px solid var(--border-light); padding: 20px; margin-bottom: 28px; display: none; }
+.config-panel.visible { display: block; }
+.config-panel .config-title { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+.config-panel input[type="text"] { border: 1px solid var(--border); }
+.config-toggle { font-size: 11px; color: var(--text-muted); cursor: pointer; text-decoration: underline; background: none; border: none; font-family: inherit; letter-spacing: 0.5px; margin-bottom: 16px; }
+.config-toggle:hover { color: var(--text); }
 
-  /* ===== BUTTONS ===== */
-  .btn-row { display: flex; gap: 12px; margin-top: 36px; justify-content: flex-end; flex-wrap: wrap; }
-  .btn {
-    padding: 14px 32px; border: none; border-radius: 0; font-size: 11px; font-weight: 600;
-    cursor: pointer; transition: all 0.3s; font-family: inherit; letter-spacing: 2px; text-transform: uppercase;
-  }
-  .btn-primary { background: var(--black); color: var(--white); }
-  .btn-primary:hover { background: #3a3536; }
-  .btn-secondary { background: var(--white); color: var(--text); border: 1px solid var(--black); }
-  .btn-secondary:hover { background: var(--cream-light); }
-  .btn-primary.sending { opacity: 0.5; pointer-events: none; }
+/* ===== FOOTER ===== */
+.footer { text-align: center; padding: 40px 20px; }
+.footer img { height: 20px; opacity: 0.3; }
+.footer p { font-size: 10px; color: var(--beige-dark); margin-top: 8px; letter-spacing: 1px; }
 
-  .required::after { content: " *"; color: var(--red); font-weight: 400; }
+/* ===== TOAST ===== */
+.copy-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--black); color: var(--white); padding: 14px 32px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100; }
+.copy-toast.show { opacity: 1; }
 
-  /* Preposition hint */
-  .prep-hint { display: inline-block; font-size: 10px; padding: 3px 10px; margin-left: 8px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
-  .prep-hint.de { background: var(--blue-hint); color: #2E5A88; }
-  .prep-hint.com { background: var(--pink-hint); color: #8C3A5A; }
+/* ===== COUNTER ===== */
+.photo-counter { font-size: 10px; color: var(--text-muted); margin-top: 8px; letter-spacing: 0.5px; }
 
-  /* ===== PHOTO UPLOAD ===== */
-  .photos-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  .photo-slot {
-    border: 2px dashed var(--border); padding: 20px 12px; text-align: center;
-    cursor: pointer; transition: all 0.3s; position: relative; min-height: 200px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
-    background: var(--cream-light);
-  }
-  .photo-slot:hover { border-color: var(--black); background: var(--white); }
-  .photo-slot.has-image { border-style: solid; border-color: var(--border); padding: 8px; }
-  .photo-slot input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-  .photo-slot .slot-icon { font-size: 28px; color: var(--beige-dark); line-height: 1; }
-  .photo-slot .slot-label { font-size: 10px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
-  .photo-slot .slot-hint { font-size: 10px; color: var(--beige-dark); }
-  .photo-slot .photo-preview { max-width: 100%; max-height: 180px; object-fit: contain; }
-  .photo-slot .photo-remove {
-    position: absolute; top: 6px; right: 6px; background: var(--black); color: var(--white);
-    border: none; width: 22px; height: 22px; cursor: pointer; font-size: 13px;
-    display: flex; align-items: center; justify-content: center; opacity: 0.7; transition: opacity 0.2s;
-  }
-  .photo-slot .photo-remove:hover { opacity: 1; }
-  .photo-slot .photo-name { font-size: 9px; color: var(--text-muted); margin-top: 4px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .photo-slot .slot-tag {
-    position: absolute; top: 0; left: 0; background: var(--black); color: var(--white);
-    font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
-    padding: 3px 10px;
-  }
-
-  /* ===== STATUS ===== */
-  .status-banner {
-    margin-top: 16px; padding: 14px 20px; font-size: 12px; letter-spacing: 0.3px;
-    display: none; align-items: center; gap: 10px;
-  }
-  .status-banner.visible { display: flex; }
-  .status-banner.success { background: #EAF4EA; color: #2D5A2D; border: 1px solid #B8D8B8; }
-  .status-banner.error { background: #FAECEB; color: #8C3A3A; border: 1px solid #E0BABA; }
-  .status-banner.info { background: var(--cream-light); color: var(--text-light); border: 1px solid var(--border); }
-
-  /* ===== CONFIG ===== */
-  .config-panel {
-    background: var(--cream-light); border: 1px solid var(--border-light); padding: 20px;
-    margin-bottom: 28px; display: none;
-  }
-  .config-panel.visible { display: block; }
-  .config-panel .config-title {
-    font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 12px;
-  }
-  .config-panel input[type="text"] { border: 1px solid var(--border); }
-  .config-toggle {
-    font-size: 11px; color: var(--text-muted); cursor: pointer; text-decoration: underline;
-    background: none; border: none; font-family: inherit; letter-spacing: 0.5px; margin-bottom: 16px;
-  }
-  .config-toggle:hover { color: var(--text); }
-
-  /* ===== FOOTER ===== */
-  .footer { text-align: center; padding: 40px 20px; }
-  .footer img { height: 20px; opacity: 0.3; }
-  .footer p { font-size: 10px; color: var(--beige-dark); margin-top: 8px; letter-spacing: 1px; }
-
-  /* ===== TOAST ===== */
-  .copy-toast {
-    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-    background: var(--black); color: var(--white); padding: 14px 32px;
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
-    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100;
-  }
-  .copy-toast.show { opacity: 1; }
-
-  /* ===== COUNTER ===== */
-  .photo-counter {
-    font-size: 10px; color: var(--text-muted); margin-top: 8px; letter-spacing: 0.5px;
-  }
-
-  /* Campo "Outro" inline */
-  .campo-outro {
-    width: 100%; padding: 10px 16px; border: 1px solid var(--border); border-radius: 0;
-    font-size: 13px; font-family: inherit; background: var(--cream-light); color: var(--text);
-    transition: border 0.3s;
-  }
-  .campo-outro:focus { outline: none; border-color: var(--black); background: var(--white); }
+/* Campo "Outro" inline */
+.campo-outro { width: 100%; padding: 10px 16px; border: 1px solid var(--border); border-radius: 0; font-size: 13px; font-family: inherit; background: var(--cream-light); color: var(--text); transition: border 0.3s; }
+.campo-outro:focus { outline: none; border-color: var(--black); background: var(--white); }
 </style>
 </head>
 <body>
@@ -207,17 +139,16 @@
 
 <div class="container">
 
-  <!-- CONFIG PANEL -->
   <!-- LINK SLIDES -->
   <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
     <button class="config-toggle" onclick="toggleConfig()" style="margin-bottom:0;">Configurar Google Slides</button>
-    <a href="https://docs.google.com/presentation/d/1UWv-lJN5MhxD0yCZrMHUizPA67luwubR6y3ocZc9prc/edit" target="_blank"
-       style="display:inline-flex; align-items:center; gap:8px; background:#231F20; color:#F5F0EB; text-decoration:none; padding:10px 18px; font-size:12px; letter-spacing:1px; font-family:inherit; border-radius:2px; transition:opacity .2s;"
-       onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+    <a href="https://docs.google.com/presentation/d/1UWv-lJN5MhxD0yCZrMHUizPA67luwubR6y3ocZc9prc/edit" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#231F20; color:#F5F0EB; text-decoration:none; padding:10px 18px; font-size:12px; letter-spacing:1px; font-family:inherit; border-radius:2px; transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-      Ver Apresentação no Google Slides
+      Ver ApresentaÃ§Ã£o no Google Slides
     </a>
   </div>
+
+  <!-- CONFIG PANEL -->
   <div id="configPanel" class="config-panel">
     <div class="config-title">Integracao Google Slides</div>
     <div class="form-group">
@@ -235,7 +166,6 @@
 
       <!-- INFORMACOES BASICAS -->
       <div class="section-title" style="margin-top:0;">Informacoes do Produto <span class="badge">Obrigatorio</span></div>
-
       <div class="two-cols">
         <div class="form-group">
           <label class="required">Nome / Referencia</label>
@@ -266,15 +196,14 @@
           <label><input type="radio" name="tipo" value="Pelerine"><span>Pelerine</span></label>
           <label><input type="radio" name="tipo" value="Polo"><span>Polo</span></label>
           <label><input type="radio" name="tipo" value="Conjunto"><span>Conjunto</span></label>
-          <label><input type="radio" name="tipo" value="Acessório"><span>Acessório</span></label>
-          <label><input type="radio" name="tipo" value="Tênis"><span>Tênis</span></label>
+          <label><input type="radio" name="tipo" value="AcessÃ³rio"><span>AcessÃ³rio</span></label>
+          <label><input type="radio" name="tipo" value="TÃªnis"><span>TÃªnis</span></label>
           <label><input type="radio" name="tipo" value="Chinelo"><span>Chinelo</span></label>
           <label><input type="radio" name="tipo" value="Bota"><span>Bota</span></label>
-          <label><input type="radio" name="tipo" value="Sandália"><span>Sandália</span></label>
+          <label><input type="radio" name="tipo" value="SandÃ¡lia"><span>SandÃ¡lia</span></label>
           <label><input type="radio" name="tipo" value="Outro"><span>Outro</span></label>
         </div>
       </div>
-
       <div class="form-group" id="tipoOutroGroup" style="display:none;">
         <label>Especifique o tipo</label>
         <input type="text" id="tipoOutro" placeholder="Ex: Poncho, Bolero, Macacao...">
@@ -290,7 +219,6 @@
           <input type="text" id="cor" placeholder="Ex: Off-white, Azul-marinho...">
         </div>
       </div>
-
       <div class="form-group">
         <label>Cores Secundarias / Detalhes de cor</label>
         <input type="text" id="corSecundaria" placeholder="Ex: Detalhes em dourado, botoes pretos, listras em cru...">
@@ -298,7 +226,6 @@
 
       <!-- CONSTRUCAO E MATERIAIS -->
       <div class="section-title">Construcao e Materiais</div>
-
       <div class="form-group">
         <label class="required">Composicao / Material</label>
         <div class="hint">Informe os materiais e percentuais, se disponiveis</div>
@@ -321,18 +248,17 @@
           <label><input type="radio" name="ponto" value="Croche"><span>Croche</span></label>
           <label><input type="radio" name="ponto" value="Ponto bolinha"><span>Ponto bolinha</span></label>
           <label><input type="radio" name="ponto" value="Waffle"><span>Waffle</span></label>
+          <label><input type="radio" name="ponto" value="Ponto Tela"><span>Ponto Tela</span></label>
           <label><input type="radio" name="ponto" value="Outro"><span>Outro</span></label>
         </div>
       </div>
-
       <div class="form-group" id="pontoOutroGroup" style="display:none;">
         <label>Especifique o ponto/textura</label>
         <input type="text" id="pontoOutro" placeholder="Ex: Ajour, Rendado, Piquet...">
       </div>
 
       <!-- DESIGN E MODELAGEM -->
-      <div class="section-title">Design e Modelagem</div>
-
+      <div class="section-title">Design E Modelagem</div>
       <div class="two-cols">
         <div class="form-group">
           <label class="required">Decote</label>
@@ -353,7 +279,6 @@
           </select>
           <input type="text" id="golaDecoteOutro" class="campo-outro" style="display:none; margin-top:8px;" placeholder="Descreva o decote...">
         </div>
-
         <div class="form-group">
           <label class="required">Manga</label>
           <select id="manga" onchange="toggleOutro('manga','mangaOutro')">
@@ -415,10 +340,10 @@
         <label>Fechamento</label>
         <div class="radio-group">
           <label><input type="radio" name="fecho" value="Sem fecho"><span>Sem fecho</span></label>
-          <label><input type="radio" name="fecho" value="Botões"><span>Botões</span></label>
-          <label><input type="radio" name="fecho" value="Zíper"><span>Zíper</span></label>
-          <label><input type="radio" name="fecho" value="Laço"><span>Laço</span></label>
-          <label><input type="radio" name="fecho" value="Amarração"><span>Amarração</span></label>
+          <label><input type="radio" name="fecho" value="BotÃµes"><span>BotÃµes</span></label>
+          <label><input type="radio" name="fecho" value="ZÃ­per"><span>ZÃ­per</span></label>
+          <label><input type="radio" name="fecho" value="LaÃ§o"><span>LaÃ§o</span></label>
+          <label><input type="radio" name="fecho" value="AmarraÃ§Ã£o"><span>AmarraÃ§Ã£o</span></label>
           <label><input type="radio" name="fecho" value="Transpasse"><span>Transpasse</span></label>
           <label><input type="radio" name="fecho" value="Fivela"><span>Fivela</span></label>
           <label><input type="radio" name="fecho" value="Outro"><span>Outro</span></label>
@@ -428,13 +353,12 @@
 
       <!-- DETALHES -->
       <div class="section-title">Detalhes e Acabamentos</div>
-
       <div class="form-group">
         <label>Detalhes Construtivos</label>
         <div class="hint">Selecione todos os que se aplicam</div>
         <div class="checkbox-group" id="detalhesGroup">
           <label><input type="checkbox" value="Cintura Alta"><span>Cintura Alta</span></label>
-          <label><input type="checkbox" value="Cintura Elástica"><span>Cintura Elástica</span></label>
+          <label><input type="checkbox" value="Cintura ElÃ¡stica"><span>Cintura ElÃ¡stica</span></label>
           <label><input type="checkbox" value="Barra Italiana"><span>Barra Italiana</span></label>
           <label><input type="checkbox" value="Barra Reta"><span>Barra Reta</span></label>
           <label><input type="checkbox" value="Acabamento em Rolinho"><span>Acabamento em Rolinho</span></label>
@@ -451,17 +375,16 @@
           <label><input type="checkbox" value="Capuz"><span>Capuz</span></label>
           <label><input type="checkbox" value="Bolsos Embutidos"><span>Bolsos Embutidos</span></label>
           <label><input type="checkbox" value="Punhos"><span>Punhos</span></label>
-          <label><input type="checkbox" value="Cós Elástico"><span>Cós Elástico</span></label>
+          <label><input type="checkbox" value="CÃ³ss ElÃ¡stico">Span>CÃ³s ElÃ¡stico</span></label>
           <label><input type="checkbox" value="Pregas Laterais"><span>Pregas Laterais</span></label>
           <label><input type="checkbox" value="Cava Reta"><span>Cava Reta</span></label>
-          <label><input type="checkbox" value="Ombro Caído"><span>Ombro Caído</span></label>
+          <label><input type="checkbox" value="Ombro CaÃ­do"><span>Ombro CaÃ­do</span></label>
           <label><input type="checkbox" value="Franjas na Barra"><span>Franjas na Barra</span></label>
-          <label><input type="checkbox" value="Barra Assimétrica"><span>Barra Assimétrica</span></label>
+          <label><input type="checkbox" value="Barra AssimÃ©trica"><span>Barra AssimÃ©trica</span></label>
           <label><input type="checkbox" value="Gola Avulsa"><span>Gola Avulsa</span></label>
-          <label><input type="checkbox" value="Peça 3D"><span>Peça 3D</span></label>
+          <label><input type="checkbox" value="PeÃ§a 3D"><span>PeÃ§a 3D</span></label>
         </div>
       </div>
-
       <div class="form-group">
         <label>Outros Detalhes (texto livre)</label>
         <textarea id="detalhesLivre" rows="2" placeholder="Descreva qualquer detalhe adicional que nao esteja nas opcoes acima..."></textarea>
@@ -469,14 +392,12 @@
 
       <!-- CONTEXTO -->
       <div class="section-title">Contexto Extra <span class="badge">Opcional</span></div>
-
       <div class="two-cols">
         <div class="form-group">
           <label>Instrucoes de Cuidado</label>
           <input type="text" id="cuidado" placeholder="Ex: Lavagem a mao, Lavar a seco...">
         </div>
       </div>
-
       <div class="form-group">
         <label>Observacoes / Contexto Adicional</label>
         <textarea id="observacoes" rows="3" placeholder="Publico-alvo especial, uso pretendido, destaque de campanha..."></textarea>
@@ -485,7 +406,6 @@
       <!-- FOTOS -->
       <div class="section-title">Fotos do Produto <span class="badge">Recomendado</span></div>
       <div class="hint" style="margin-bottom:16px; font-size:11px; color:var(--text-muted);">Ate 2 fotos still + 1 foto na modelo. JPG ou PNG, max 5MB cada.</div>
-
       <div class="photos-grid">
         <!-- STILL 1 -->
         <div class="photo-slot" id="slotStill1">
@@ -495,7 +415,6 @@
           <div class="slot-label">Foto Still 1</div>
           <div class="slot-hint">Frente / Principal</div>
         </div>
-
         <!-- STILL 2 -->
         <div class="photo-slot" id="slotStill2">
           <span class="slot-tag">STILL</span>
@@ -504,7 +423,6 @@
           <div class="slot-label">Foto Still 2</div>
           <div class="slot-hint">Costas / Detalhe</div>
         </div>
-
         <!-- MODELO -->
         <div class="photo-slot" id="slotModelo">
           <span class="slot-tag" style="background:#6B6461;">MODELO</span>
@@ -521,12 +439,9 @@
         <button type="button" class="btn btn-secondary" onclick="clearForm()">Limpar</button>
         <button type="button" class="btn btn-primary" id="btnEnviar" onclick="enviarParaSlides()">Enviar ao Slides</button>
       </div>
-
     </form>
-
     <div id="formStatus" class="status-banner"></div>
   </div>
-
 </div>
 
 <!-- FOOTER -->
@@ -538,381 +453,314 @@
 <div id="toast" class="copy-toast"></div>
 
 <script>
-  // ===== PHOTO STATE =====
-  const photos = { still1: null, still2: null, modelo: null };
-  const photoNames = { still1: null, still2: null, modelo: null };
+// ===== PHOTO STATE =====
+const photos = { still1: null, still2: null, modelo: null };
+const photoNames = { still1: null, still2: null, modelo: null };
 
-  // Redimensiona imagem para max 1200px (necessario para insertImage do Google Slides)
-  function resizeImage(dataUrl, maxSize, quality, callback) {
-    const img = new Image();
-    img.onload = function() {
-      let w = img.width, h = img.height;
-      if (w > maxSize || h > maxSize) {
-        if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
-        else       { w = Math.round(w * maxSize / h); h = maxSize; }
-      }
-      const canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, w, h);
-      callback(canvas.toDataURL('image/jpeg', quality));
-    };
-    img.src = dataUrl;
-  }
-
-  function handlePhoto(event, slotKey) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('A foto deve ter no maximo 5MB.');
-      event.target.value = '';
-      return;
+// Redimensiona imagem para max 1200px (necessario para insertImage do Google Slides)
+function resizeImage(dataUrl, maxSize, quality, callback) {
+  const img = new Image();
+  img.onload = function() {
+    let w = img.width, h = img.height;
+    if (w > maxSize || h > maxSize) {
+      if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+      else { w = Math.round(w * maxSize / h); h = maxSize; }
     }
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, w, h);
+    callback(canvas.toDataURL('image/jpeg', quality));
+  };
+  img.src = dataUrl;
+}
 
-    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
-      alert('Formato invalido. Use JPG, PNG ou WebP.');
-      event.target.value = '';
-      return;
-    }
+function handlePhoto(event, slotKey) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { alert('A foto deve ter no maximo 5MB.'); event.target.value = ''; return; }
+  if (!file.type.match(/^image\/(jpeg|png|webp)$/)) { alert('Formato invalido. Use JPG, PNG ou WebP.'); event.target.value = ''; return; }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    resizeImage(e.target.result, 1200, 0.85, function(resizedDataUrl) {
+      photos[slotKey] = resizedDataUrl;
+      photoNames[slotKey] = file.name.replace(/\.[^.]+$/, '.jpg');
+      showPhotoInSlot(slotKey, resizedDataUrl, photoNames[slotKey]);
+      updatePhotoCounter();
+    });
+  };
+  reader.readAsDataURL(file);
+}
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      // Redimensiona para max 1200px antes de armazenar (Google Slides insertImage tem limite de tamanho)
-      resizeImage(e.target.result, 1200, 0.85, function(resizedDataUrl) {
-        photos[slotKey] = resizedDataUrl;
-        photoNames[slotKey] = file.name.replace(/\.[^.]+$/, '.jpg'); // sempre .jpg apos conversao
-        showPhotoInSlot(slotKey, resizedDataUrl, photoNames[slotKey]);
-        updatePhotoCounter();
-      });
-    };
-    reader.readAsDataURL(file);
-  }
+function showPhotoInSlot(slotKey, dataUrl, fileName) {
+  const slotId = slotKey === 'still1' ? 'slotStill1' : slotKey === 'still2' ? 'slotStill2' : 'slotModelo';
+  const inputId = slotKey === 'still1' ? 'inputStill1' : slotKey === 'still2' ? 'inputStill2' : 'inputModelo';
+  const tagText = slotKey === 'modelo' ? 'MODELO' : 'STILL';
+  const tagStyle = slotKey === 'modelo' ? ' style="background:#6B6461;"' : '';
+  const slot = document.getElementById(slotId);
+  slot.classList.add('has-image');
+  slot.innerHTML = `
+    <span class="slot-tag"${tagStyle}>${tagText}</span>
+    <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}')">
+    <button type="button" class="photo-remove" onclick="event.stopPropagation(); removePhoto('${slotKey}');">&times;</button>
+    <img src="${dataUrl}" class="photo-preview" alt="${tagText}">
+    <div class="photo-name">${fileName}</div>
+  `;
+}
 
-  function showPhotoInSlot(slotKey, dataUrl, fileName) {
-    const slotId = slotKey === 'still1' ? 'slotStill1' : slotKey === 'still2' ? 'slotStill2' : 'slotModelo';
-    const inputId = slotKey === 'still1' ? 'inputStill1' : slotKey === 'still2' ? 'inputStill2' : 'inputModelo';
-    const tagText = slotKey === 'modelo' ? 'MODELO' : 'STILL';
-    const tagStyle = slotKey === 'modelo' ? ' style="background:#6B6461;"' : '';
-    const slot = document.getElementById(slotId);
-    slot.classList.add('has-image');
+function removePhoto(slotKey) {
+  photos[slotKey] = null;
+  photoNames[slotKey] = null;
+  const slotId = slotKey === 'still1' ? 'slotStill1' : slotKey === 'still2' ? 'slotStill2' : 'slotModelo';
+  const inputId = slotKey === 'still1' ? 'inputStill1' : slotKey === 'still2' ? 'inputStill2' : 'inputModelo';
+  const isModelo = slotKey === 'modelo';
+  const slot = document.getElementById(slotId);
+  slot.classList.remove('has-image');
+  if (isModelo) {
     slot.innerHTML = `
-      <span class="slot-tag"${tagStyle}>${tagText}</span>
+      <span class="slot-tag" style="background:#6B6461;">MODELO</span>
       <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}')">
-      <button type="button" class="photo-remove" onclick="event.stopPropagation(); removePhoto('${slotKey}');">&times;</button>
-      <img src="${dataUrl}" class="photo-preview" alt="${tagText}">
-      <div class="photo-name">${fileName}</div>
+      <div class="slot-icon">&#128100;</div>
+      <div class="slot-label">Foto Modelo</div>
+      <div class="slot-hint">Se houver</div>
+    `;
+  } else {
+    const num = slotKey === 'still1' ? '1' : '2';
+    const hintText = num === '1' ? 'Frente / Principal' : 'Costas / Detalhe';
+    slot.innerHTML = `
+      <span class="slot-tag">STILL</span>
+      <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}')">
+      <div class="slot-icon">&#128247;</div>
+      <div class="slot-label">Foto Still ${num}</div>
+      <div class="slot-hint">${hintText}</div>
     `;
   }
+  updatePhotoCounter();
+}
 
-  function removePhoto(slotKey) {
-    photos[slotKey] = null;
-    photoNames[slotKey] = null;
-    const slotId = slotKey === 'still1' ? 'slotStill1' : slotKey === 'still2' ? 'slotStill2' : 'slotModelo';
-    const inputId = slotKey === 'still1' ? 'inputStill1' : slotKey === 'still2' ? 'inputStill2' : 'inputModelo';
-    const isModelo = slotKey === 'modelo';
-    const slot = document.getElementById(slotId);
-    slot.classList.remove('has-image');
+function updatePhotoCounter() {
+  const count = Object.values(photos).filter(Boolean).length;
+  document.getElementById('photoCounter').textContent = `${count} de 3 fotos adicionadas`;
+}
 
-    if (isModelo) {
-      slot.innerHTML = `
-        <span class="slot-tag" style="background:#6B6461;">MODELO</span>
-        <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}')">
-        <div class="slot-icon">&#128100;</div>
-        <div class="slot-label">Foto Modelo</div>
-        <div class="slot-hint">Se houver</div>
-      `;
-    } else {
-      const num = slotKey === 'still1' ? '1' : '2';
-      const hintText = num === '1' ? 'Frente / Principal' : 'Costas / Detalhe';
-      slot.innerHTML = `
-        <span class="slot-tag">STILL</span>
-        <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event, '${slotKey}')">
-        <div class="slot-icon">&#128247;</div>
-        <div class="slot-label">Foto Still ${num}</div>
-        <div class="slot-hint">${hintText}</div>
-      `;
-    }
-    updatePhotoCounter();
-  }
-
-  function updatePhotoCounter() {
-    const count = Object.values(photos).filter(Boolean).length;
-    document.getElementById('photoCounter').textContent = `${count} de 3 fotos adicionadas`;
-  }
-
-  // ===== DRAG & DROP =====
-  document.querySelectorAll('.photo-slot').forEach(slot => {
-    ['dragenter', 'dragover'].forEach(evt => {
-      slot.addEventListener(evt, e => { e.preventDefault(); slot.style.borderColor = 'var(--black)'; });
-    });
-    ['dragleave', 'drop'].forEach(evt => {
-      slot.addEventListener(evt, e => { e.preventDefault(); slot.style.borderColor = ''; });
-    });
-    slot.addEventListener('drop', e => {
-      const file = e.dataTransfer.files[0];
-      if (file) {
-        const slotKey = slot.id === 'slotStill1' ? 'still1' : slot.id === 'slotStill2' ? 'still2' : 'modelo';
-        const inputId = slot.id === 'slotStill1' ? 'inputStill1' : slot.id === 'slotStill2' ? 'inputStill2' : 'inputModelo';
-        const input = document.getElementById(inputId);
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        input.files = dt.files;
-        handlePhoto({ target: input }, slotKey);
-      }
-    });
+// ===== DRAG & DROP =====
+document.querySelectorAll('.photo-slot').forEach(slot => {
+  ['dragenter', 'dragover'].forEach(evt => {
+    slot.addEventListener(evt, e => { e.preventDefault(); slot.style.borderColor = 'var(--black)'; });
   });
-
-  // ===== TOGGLE "OUTRO" FIELDS =====
-  function toggleOutro(selectId, outroInputId) {
-    const sel = document.getElementById(selectId);
-    const inp = document.getElementById(outroInputId);
-    if (sel.value === '__outro__') {
-      inp.style.display = 'block';
-      inp.focus();
-    } else {
-      inp.style.display = 'none';
-      inp.value = '';
-    }
-  }
-
-  function toggleOutroGola() {
-    const sel = document.getElementById('golaDecote');
-    const inp = document.getElementById('golaDecoteOutro');
-    if (sel.value === 'outro|__outro__') {
-      inp.style.display = 'block';
-      inp.focus();
-    } else {
-      inp.style.display = 'none';
-      inp.value = '';
-    }
-  }
-
-  // Fechamento "Outro"
-  document.querySelectorAll('input[name="fecho"]').forEach(r => {
-    r.addEventListener('change', () => {
-      const inp = document.getElementById('fechoOutro');
-      if (r.value === 'Outro') {
-        inp.style.display = 'block';
-        inp.focus();
-      } else {
-        inp.style.display = 'none';
-        inp.value = '';
-      }
-    });
+  ['dragleave', 'drop'].forEach(evt => {
+    slot.addEventListener(evt, e => { e.preventDefault(); slot.style.borderColor = ''; });
   });
-
-  // ===== FORM HELPERS =====
-  document.querySelectorAll('input[name="tipo"]').forEach(r => {
-    r.addEventListener('change', () => {
-      document.getElementById('tipoOutroGroup').style.display = r.value === 'Outro' ? 'block' : 'none';
-    });
+  slot.addEventListener('drop', e => {
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const slotKey = slot.id === 'slotStill1' ? 'still1' : slot.id === 'slotStill2' ? 'still2' : 'modelo';
+      const inputId = slot.id === 'slotStill1' ? 'inputStill1' : slot.id === 'slotStill2' ? 'inputStill2' : 'inputModelo';
+      const input = document.getElementById(inputId);
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      input.files = dt.files;
+      handlePhoto({ target: input }, slotKey);
+    }
   });
-  document.querySelectorAll('input[name="ponto"]').forEach(r => {
-    r.addEventListener('change', () => {
-      document.getElementById('pontoOutroGroup').style.display = r.value === 'Outro' ? 'block' : 'none';
-    });
+});
+
+// ===== TOGGLE "OUTRO" FIELDS =====
+function toggleOutro(selectId, outroInputId) {
+  const sel = document.getElementById(selectId);
+  const inp = document.getElementById(outroInputId);
+  if (sel.value === '__outro__') { inp.style.display = 'block'; inp.focus(); }
+  else { inp.style.display = 'none'; inp.value = ''; }
+}
+
+function toggleOutroGola() {
+  const sel = document.getElementById('golaDecote');
+  const inp = document.getElementById('golaDecoteOutro');
+  if (sel.value === 'outro|__outro__') { inp.style.display = 'block'; inp.focus(); }
+  else { inp.style.display = 'none'; inp.value = ''; }
+}
+
+// Fechamento "Outro"
+document.querySelectorAll('input[name="fecho"]').forEach(r => {
+  r.addEventListener('change', () => {
+    const inp = document.getElementById('fechoOutro');
+    if (r.value === 'Outro') { inp.style.display = 'block'; inp.focus(); }
+    else { inp.style.display = 'none'; inp.value = ''; }
   });
+});
 
-  function updatePrepHint() {
-    const val = document.getElementById('golaDecote').value;
-    const hint = document.getElementById('prepHint');
-    if (!val) { hint.style.display = 'none'; return; }
-    const tipo = val.split('|')[0];
-    if (tipo === 'gola') {
-      hint.textContent = 'usar DE';
-      hint.className = 'prep-hint de';
-      hint.style.display = 'inline-block';
-    } else if (tipo === 'decote') {
-      hint.textContent = 'usar COM';
-      hint.className = 'prep-hint com';
-      hint.style.display = 'inline-block';
-    } else {
-      hint.style.display = 'none';
-    }
+// ===== FORM HELPERS =====
+document.querySelectorAll('input[name="tipo"]').forEach(r => {
+  r.addEventListener('change', () => {
+    document.getElementById('tipoOutroGroup').style.display = r.value === 'Outro' ? 'block' : 'none';
+  });
+});
+
+document.querySelectorAll('input[name="ponto"]').forEach(r => {
+  r.addEventListener('change', () => {
+    document.getElementById('pontoOutroGroup').style.display = r.value === 'Outro' ? 'block' : 'none';
+  });
+});
+
+function getFormData() {
+  const tipoRadio = document.querySelector('input[name="tipo"]:checked');
+  let tipo = tipoRadio ? tipoRadio.value : '';
+  if (tipo === 'Outro') tipo = document.getElementById('tipoOutro').value || 'Outro';
+
+  const pontoRadio = document.querySelector('input[name="ponto"]:checked');
+  let ponto = pontoRadio ? pontoRadio.value : '';
+  if (ponto === 'Outro') ponto = document.getElementById('pontoOutro').value || 'Outro';
+
+  const fechoRadio = document.querySelector('input[name="fecho"]:checked');
+  let fecho = fechoRadio ? fechoRadio.value : '';
+  if (fecho === 'Outro') fecho = document.getElementById('fechoOutro').value || 'Outro';
+
+  const golaDecoteVal = document.getElementById('golaDecote').value;
+  let golaDecote = '', golaDecoteTipo = '';
+  if (golaDecoteVal === 'outro|__outro__') {
+    golaDecoteTipo = 'outro';
+    golaDecote = document.getElementById('golaDecoteOutro').value || 'Outro';
+  } else if (golaDecoteVal) {
+    const parts = golaDecoteVal.split('|');
+    golaDecoteTipo = parts[0];
+    golaDecote = parts[1];
   }
 
-  function getFormData() {
-    const tipoRadio = document.querySelector('input[name="tipo"]:checked');
-    let tipo = tipoRadio ? tipoRadio.value : '';
-    if (tipo === 'Outro') tipo = document.getElementById('tipoOutro').value || 'Outro';
+  let manga = document.getElementById('manga').value;
+  if (manga === '__outro__') manga = document.getElementById('mangaOutro').value || 'Outro';
 
-    const pontoRadio = document.querySelector('input[name="ponto"]:checked');
-    let ponto = pontoRadio ? pontoRadio.value : '';
-    if (ponto === 'Outro') ponto = document.getElementById('pontoOutro').value || 'Outro';
+  let modelagem = document.getElementById('modelagem').value;
+  if (modelagem === '__outro__') modelagem = document.getElementById('modelagemOutro').value || 'Outro';
 
-    const fechoRadio = document.querySelector('input[name="fecho"]:checked');
-    let fecho = fechoRadio ? fechoRadio.value : '';
-    if (fecho === 'Outro') fecho = document.getElementById('fechoOutro').value || 'Outro';
+  let comprimento = document.getElementById('comprimento').value;
+  if (comprimento === '__outro__') comprimento = document.getElementById('comprimentoOutro').value || 'Outro';
 
-    const golaDecoteVal = document.getElementById('golaDecote').value;
-    let golaDecote = '', golaDecoteTipo = '';
-    if (golaDecoteVal === 'outro|__outro__') {
-      golaDecoteTipo = 'outro';
-      golaDecote = document.getElementById('golaDecoteOutro').value || 'Outro';
-    } else if (golaDecoteVal) {
-      const parts = golaDecoteVal.split('|');
-      golaDecoteTipo = parts[0];
-      golaDecote = parts[1];
-    }
+  const detalhes = [];
+  document.querySelectorAll('#detalhesGroup input:checked').forEach(cb => detalhes.push(cb.value));
 
-    // Manga com "Outro"
-    let manga = document.getElementById('manga').value;
-    if (manga === '__outro__') manga = document.getElementById('mangaOutro').value || 'Outro';
+  return {
+    source: 'cadastro',
+    nome: document.getElementById('nome').value,
+    codigo: document.getElementById('codigo').value,
+    tipo, colecao: document.getElementById('colecao').value,
+    composicao: document.getElementById('composicao').value,
+    ponto, golaDecote, golaDecoteTipo, manga, modelagem, comprimento, fecho,
+    detalhes,
+    detalhesLivre: document.getElementById('detalhesLivre').value,
+    cor: document.getElementById('cor').value,
+    corSecundaria: document.getElementById('corSecundaria').value,
+    cuidado: document.getElementById('cuidado').value,
+    observacoes: document.getElementById('observacoes').value,
+    fotoStill1: photos.still1 || null,
+    fotoStill1Nome: photoNames.still1 || null,
+    fotoStill2: photos.still2 || null,
+    fotoStill2Nome: photoNames.still2 || null,
+    fotoModelo: photos.modelo || null,
+    fotoModeloNome: photoNames.modelo || null,
+  };
+}
 
-    // Modelagem com "Outro"
-    let modelagem = document.getElementById('modelagem').value;
-    if (modelagem === '__outro__') modelagem = document.getElementById('modelagemOutro').value || 'Outro';
+function clearForm() {
+  document.getElementById('produtoForm').reset();
+  document.getElementById('tipoOutroGroup').style.display = 'none';
+  document.getElementById('pontoOutroGroup').style.display = 'none';
+  document.getElementById('formStatus').className = 'status-banner';
+  document.querySelectorAll('.campo-outro').forEach(el => { el.style.display = 'none'; el.value = ''; });
+  removePhoto('still1');
+  removePhoto('still2');
+  removePhoto('modelo');
+}
 
-    // Comprimento com "Outro"
-    let comprimento = document.getElementById('comprimento').value;
-    if (comprimento === '__outro__') comprimento = document.getElementById('comprimentoOutro').value || 'Outro';
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
 
-    const detalhes = [];
-    document.querySelectorAll('#detalhesGroup input:checked').forEach(cb => detalhes.push(cb.value));
+function showStatus(type, message) {
+  const el = document.getElementById('formStatus');
+  el.className = `status-banner ${type} visible`;
+  el.textContent = message;
+  if (type === 'success') { setTimeout(() => { el.className = 'status-banner'; }, 6000); }
+}
 
-    return {
-      source: 'cadastro',
-      nome: document.getElementById('nome').value,
-      codigo: document.getElementById('codigo').value,
-      tipo,
-      colecao: document.getElementById('colecao').value,
-      composicao: document.getElementById('composicao').value,
-      ponto,
-      golaDecote,
-      golaDecoteTipo,
-      manga,
-      modelagem,
-      comprimento,
-      fecho,
-      detalhes,
-      detalhesLivre: document.getElementById('detalhesLivre').value,
-      cor: document.getElementById('cor').value,
-      corSecundaria: document.getElementById('corSecundaria').value,
-      cuidado: document.getElementById('cuidado').value,
-      observacoes: document.getElementById('observacoes').value,
-      fotoStill1: photos.still1 || null,
-      fotoStill1Nome: photoNames.still1 || null,
-      fotoStill2: photos.still2 || null,
-      fotoStill2Nome: photoNames.still2 || null,
-      fotoModelo: photos.modelo || null,
-      fotoModeloNome: photoNames.modelo || null,
-    };
+// ===== GOOGLE SLIDES =====
+const CONFIG_KEY = 'anselmi_cadastro_config';
+
+function getAppsScriptUrl() {
+  return document.getElementById('appsScriptUrl').value.trim();
+}
+
+function saveConfig() {
+  const url = getAppsScriptUrl();
+  try { localStorage.setItem(CONFIG_KEY, JSON.stringify({ url })); } catch(e) {}
+  updateConfigStatus(url);
+}
+
+function loadConfig() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
+    if (saved.url) { document.getElementById('appsScriptUrl').value = saved.url; }
+  } catch(e) {}
+  const url = getAppsScriptUrl();
+  if (url) updateConfigStatus(url);
+}
+
+function updateConfigStatus(url) {
+  const status = document.getElementById('configStatus');
+  if (url && url.startsWith('https://script.google.com')) {
+    status.className = 'status-banner success visible';
+    status.textContent = 'URL configurada. O botao "Enviar ao Slides" esta ativo.';
+  } else if (url) {
+    status.className = 'status-banner error visible';
+    status.textContent = 'URL invalida. Deve comecar com https://script.google.com';
+  } else {
+    status.className = 'status-banner info';
+    status.style.display = 'flex';
+    status.textContent = 'Sem URL configurada. O botao "Enviar ao Slides" ficara desativado.';
   }
+}
 
-  function clearForm() {
-    document.getElementById('produtoForm').reset();
-    document.getElementById('tipoOutroGroup').style.display = 'none';
-    document.getElementById('pontoOutroGroup').style.display = 'none';
-    document.getElementById('prepHint').style.display = 'none';
-    document.getElementById('formStatus').className = 'status-banner';
-    // Esconder todos os campos "Outro"
-    document.querySelectorAll('.campo-outro').forEach(el => { el.style.display = 'none'; el.value = ''; });
-    removePhoto('still1');
-    removePhoto('still2');
-    removePhoto('modelo');
+function toggleConfig() {
+  document.getElementById('configPanel').classList.toggle('visible');
+}
+
+async function enviarParaSlides() {
+  const url = getAppsScriptUrl();
+  if (!url || !url.startsWith('https://script.google.com')) {
+    toggleConfig();
+    showToast('Configure a URL do Apps Script primeiro');
+    return;
   }
+  const data = getFormData();
+  if (!data.nome && !data.tipo) { alert('Preencha pelo menos o nome e tipo da peca.'); return; }
 
-  function showToast(msg) {
-    const toast = document.getElementById('toast');
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
+  const btn = document.getElementById('btnEnviar');
+  btn.classList.add('sending');
+  btn.textContent = 'Enviando...';
+  showStatus('info', 'Enviando dados e fotos para Google Slides...');
+
+  try {
+    await fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(data),
+    });
+    const fotoCount = [data.fotoStill1, data.fotoStill2, data.fotoModelo].filter(Boolean).length;
+    showStatus('success', `Produto cadastrado no Google Slides com sucesso! (${fotoCount} foto${fotoCount !== 1 ? 's' : ''} enviada${fotoCount !== 1 ? 's' : ''})`);
+    showToast('Slide criado no Google Slides');
+  } catch (error) {
+    showStatus('error', 'Erro ao enviar: ' + error.message);
+  } finally {
+    btn.classList.remove('sending');
+    btn.textContent = 'Enviar ao Slides';
   }
+}
 
-  function showStatus(type, message) {
-    const el = document.getElementById('formStatus');
-    el.className = `status-banner ${type} visible`;
-    el.textContent = message;
-    if (type === 'success') {
-      setTimeout(() => { el.className = 'status-banner'; }, 6000);
-    }
-  }
-
-  // ===== GOOGLE SLIDES =====
-  const CONFIG_KEY = 'anselmi_cadastro_config';
-
-  function getAppsScriptUrl() {
-    return document.getElementById('appsScriptUrl').value.trim();
-  }
-
-  function saveConfig() {
-    const url = getAppsScriptUrl();
-    try { localStorage.setItem(CONFIG_KEY, JSON.stringify({ url })); } catch(e) {}
-    updateConfigStatus(url);
-  }
-
-  function loadConfig() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
-      if (saved.url) {
-        document.getElementById('appsScriptUrl').value = saved.url;
-      }
-    } catch(e) {}
-    const url = getAppsScriptUrl();
-    if (url) updateConfigStatus(url);
-  }
-
-  function updateConfigStatus(url) {
-    const status = document.getElementById('configStatus');
-    if (url && url.startsWith('https://script.google.com')) {
-      status.className = 'status-banner success visible';
-      status.textContent = 'URL configurada. O botao "Enviar ao Slides" esta ativo.';
-    } else if (url) {
-      status.className = 'status-banner error visible';
-      status.textContent = 'URL invalida. Deve comecar com https://script.google.com';
-    } else {
-      status.className = 'status-banner info';
-      status.style.display = 'flex';
-      status.textContent = 'Sem URL configurada. O botao "Enviar ao Slides" ficara desativado.';
-    }
-  }
-
-  function toggleConfig() {
-    document.getElementById('configPanel').classList.toggle('visible');
-  }
-
-  async function enviarParaSlides() {
-    const url = getAppsScriptUrl();
-    if (!url || !url.startsWith('https://script.google.com')) {
-      toggleConfig();
-      showToast('Configure a URL do Apps Script primeiro');
-      return;
-    }
-
-    const data = getFormData();
-    if (!data.nome && !data.tipo) {
-      alert('Preencha pelo menos o nome e tipo da peca.');
-      return;
-    }
-
-    const btn = document.getElementById('btnEnviar');
-    btn.classList.add('sending');
-    btn.textContent = 'Enviando...';
-    showStatus('info', 'Enviando dados e fotos para Google Slides...');
-
-    try {
-      await fetch(url, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(data),
-      });
-
-      const fotoCount = [data.fotoStill1, data.fotoStill2, data.fotoModelo].filter(Boolean).length;
-      showStatus('success', `Produto cadastrado no Google Slides com sucesso! (${fotoCount} foto${fotoCount !== 1 ? 's' : ''} enviada${fotoCount !== 1 ? 's' : ''})`);
-      showToast('Slide criado no Google Slides');
-    } catch (error) {
-      showStatus('error', 'Erro ao enviar: ' + error.message);
-    } finally {
-      btn.classList.remove('sending');
-      btn.textContent = 'Enviar ao Slides';
-    }
-  }
-
-  // Init
-  loadConfig();
+// Init
+loadConfig();
 </script>
-
 </body>
 </html>
